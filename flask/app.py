@@ -361,6 +361,22 @@ def createHashTagsfromDescription():
         return jsonify({"result": response.choices[0].message.content})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
+    
+@app.route('/validateMadeforKidsfromSummary', methods=["POST"])
+def validateMadeforKidsfromSummary():
+    try:
+        text = request.form['text']
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": f"You are a youtube made for kids validator from video summary give output as a json format with keys isKidsSafe and valuesLearntfromvideo"},
+                {"role": "user", "content": text}
+            ]
+        )
+        print(response.choices[0].message.content)
+        return jsonify({"result": response.choices[0].message.content})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/hello', methods=['GET']) 
 def helloworld(): 
