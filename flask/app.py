@@ -319,7 +319,24 @@ def createTitlefromDescription():
         response = client.chat.completions.create(
             model="gpt-4",
             messages=[
-                {"role": "system", "content": f"You are a youtube video title generator from video generator designed to give output as text with {no_words} words"},
+                {"role": "system", "content": f"You are a youtube video title generator from video description designed to give output as text with {no_words} words"},
+                {"role": "user", "content": text}
+            ]
+        )
+        print(response.choices[0].message.content)
+        return jsonify({"result": response.choices[0].message.content})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
+
+@app.route('/createScriptfromDescription', methods=["POST"])
+def createScriptfromDescription():
+    try:
+        text = request.form['text']
+        no_words = request.form['no_words']
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": f"You are a youtube video script generator from video description designed to give output as text with {no_words} words"},
                 {"role": "user", "content": text}
             ]
         )
@@ -337,6 +354,23 @@ def createDescriptionfromTitle():
             model="gpt-4",
             messages=[
                 {"role": "system", "content": f"You are a youtube video description generator from video title designed to give output as text with {no_words} words"},
+                {"role": "user", "content": text}
+            ]
+        )
+        print(response.choices[0].message.content)
+        return jsonify({"result": response.choices[0].message.content})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
+
+@app.route('/generateScriptfromTitle', methods=["POST"])
+def generateScriptfromTitle():
+    try:
+        text = request.form['text']
+        no_words = request.form['no_words']
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": f"You are a youtube video script generator from video title designed to give output as text with {no_words} words"},
                 {"role": "user", "content": text}
             ]
         )
@@ -378,6 +412,75 @@ def validateMadeforKidsfromSummary():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/createDescriptionfromScript', methods=["POST"])
+def createDescriptionfromScript():
+    try:
+        text = request.form['text']
+        no_words = request.form['no_words']
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": f"You are a youtube video description generator from video script designed to give output as text with {no_words} words"},
+                {"role": "user", "content": text}
+            ]
+        )
+        print(response.choices[0].message.content)
+        return jsonify({"result": response.choices[0].message.content})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
+    
+@app.route('/createHashTagsfromScript', methods=["POST"])
+def createHashTagsfromScript():
+    try:
+        text = request.form['text']
+        no_words = request.form['no_words']
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": f"You are a youtube hashtag generator from video script designed to give output as text with {no_words} hashtags"},
+                {"role": "user", "content": text}
+            ]
+        )
+        print(response.choices[0].message.content)
+        return jsonify({"result": response.choices[0].message.content})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
+
+@app.route('/createTitlefromScript', methods=["POST"])
+def createTitlefromScript():
+    try:
+        text = request.form['text']
+        no_words = request.form['no_words']
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": f"You are a youtube video title generator from video script designed to give output as text with {no_words} words"},
+                {"role": "user", "content": text}
+            ]
+        )
+        print(response.choices[0].message.content)
+        return jsonify({"result": response.choices[0].message.content})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
+
+@app.route("/generateThumbnailfromScript", methods=["POST"])
+def generateThumbnailfromScript():
+    try:
+        text = request.form['text']
+        prompt = f"Generate youtube thumbnail for youtube script : {text}"
+        response = client.images.generate(
+            model="dall-e-3",
+            prompt=prompt,
+            size="1792x1024",
+            quality="standard",
+            n=1,
+        )
+        result_url=response.data[0].url
+        print(result_url)
+        return jsonify({"result_url": result_url})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
+    
 @app.route('/hello', methods=['GET']) 
 def helloworld(): 
 	if(request.method == 'GET'): 
