@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 export default function NewProject() {
 	const [projectTitle, setProjectTitle] = useState("")
 	const [num, setNum] = useState("10")
-	const [img, setImg] = useState(null)
+	const [img, setImg] = useState(JSON.parse("{\n\"isKidsSafe\": true,\n\"valuesLearntfromvideo\": [\"Creativity and Innovation\", \"Adventure\", \"Friendship\", \"Understanding of different time periods\"]\n}"))
 	const [loading, setLoading] = useState(false)
 	const navRouter = useRouter()
 	const handleSubmit = async (e) => {
@@ -104,10 +104,12 @@ export default function NewProject() {
 			{!loading ?
 				img ?
 					<div className={"flex flex-col gap-4 items-center justify-center w-10/12 px-4 py-8 flex-grow"}>
-						<Input
-								value={img} onChange={(e) => setImg(e.target.value)}
-								placeholder={"Your Title"}
-							/>
+						{img.isKidsSafe?<div className=" flex p-3 rounded-lg bg-gray-600 flex-row">
+							<div className=" flex flex-col justify-center items-start">
+								<h2 className=" font-semibold text-xl">{"Yes! This video is safe for kids."}</h2>
+								<p>{`Values learnt: ${img.valuesLearntfromvideo.join(", ")}.`}</p>
+							</div>
+						</div>:<></>}
 						<div className=" flex flex-row justify-between w-full items-center">
 							<Button onClick={() => { handleDiscard() }} variant="secondary" className=" w-fit">Discard</Button>
 							{/* <a className="h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90" href={img} download="Varad's Resume">Download</a> */}
