@@ -290,11 +290,6 @@ def tts_api():
         audio_file_path = os.path.join(output_folder, 'output.mp3')
         engine.save(audio_file_path)
         return send_from_directory(output_folder, 'output.mp3', as_attachment=True)
-
-    except Exception as e:
-        return {'error': str(e)}, 500
-        tts(text,voice,tempo)
-        return jsonify({"result": "Success"})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
 
