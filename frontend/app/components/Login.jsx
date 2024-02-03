@@ -9,10 +9,15 @@ import {useState} from "react"
 import {toast} from "sonner"
 import store from "@/lib/zustand"
 
+import {useRouter} from "next/navigation"
+
 export default function Login() {
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 	const {setAuth} = store()
+
+	const router = useRouter()
+
 	const handleLogin = async (e) => {
 		e.preventDefault()
 		if (password.length < 6) {
@@ -39,6 +44,7 @@ export default function Login() {
 			setAuth(true)
 			localStorage.setItem("auth-token", data.authToken)
 			toast("Logged in successfully")
+			router.push("/dashboard")
 		}
 	}
 	return (

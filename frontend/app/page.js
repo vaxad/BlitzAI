@@ -1,5 +1,15 @@
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { FaHashtag, FaLock } from "react-icons/fa";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card"
+import { CardStackIcon, CardStackPlusIcon } from "@radix-ui/react-icons";
 
 export default function Home() {
 	const imgs = [
@@ -11,39 +21,53 @@ export default function Home() {
 	]
 	return (
 		<main
-			className="fixed top-[80px] left-0 min-h-[89vh] flex-col items-center justify-center px-12 bg-slate-100 dark:bg-black  selection:bg-violet-300 text-slate-950 dark:text-slate-100">
+			className="fixed top-[80px] left-0 min-h-screen flex-col items-center justify-center px-12 bg-slate-100 dark:bg-black  selection:bg-violet-300 text-slate-950 dark:text-slate-100">
 			{/* <Navbar/> */}
 			{/* <div className=" rounded-full w-full h-[100vw] absolute top-0 bottom-0 right-0 m-auto translate-y-1/2 left-0 -z-0 opacity-65" style={{ background: "rgb(102,0,255)", background: "radial-gradient(circle, rgba(102,0,255,1) 0%, rgba(208,75,255,1) 100%)" }}></div> */}
 			<div className={`flex flex-col mt-[8vh]  h-full justify-center items-center z-0`}>
 				<div className={`h-fit flex flex-col justify-center gap-4 items-center`}>
 					<div className={`flex flex-row justify-center items-center gap-4 `}>
-						<h1 className={`md:text-6xl text-3xl font-semibold text-orange-300 `}>
-							Hackoders are here for the
-						</h1>
-						<h1 className={`md:text-6xl text-3xl font-semibold text-orange-700 `}>rescueeee</h1>
+						<h1 className={`md:text-6xl text-3xl font-semibold text-white`}>
+							<span className="text-primary">Blitz AI</span> - Automate your content creation.</h1>
+
 					</div>
-					<p className={" md:w-2/3 w-10/12 py-8 md:text-lg text-sm font-bold break-words text-center"}>Lorem
-						ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-						dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-						aliquip ex ea commodo consequat.</p>
+					<p className={" md:w-2/3 w-10/12 py-8 md:text-lg text-sm font-bold break-words text-center"}>
+						Welcome to Blitz AI, your all-in-one content creation hub! Seamlessly transform your ideas into captivating visuals with our intuitive features. From generating catchy hashtags to creating stunning thumbnails, crafting engaging titles, and even generating video captions – we've got you covered. Explore the endless possibilities of content ideation and bring your projects to life effortlessly. Join now and unleash your creativity!</p>
 					<div className=" flex md:flex-row flex-col md:py-6 py-12  gap-6 justify-center items-center">
-						<Link href="/home">
+						<Link href="/dashboard">
 							<Button>Get Started</Button>
 						</Link>
-						<Button>View Details</Button>
+
 					</div>
-					<div className={`pt-12 flex flex-col gap-2 justify-center items-center text-slate-700`}>
-						<p className={` text-xs font-medium text-slate-700 dark:text-slate-300 `}>Some small
-							feature/achievement</p>
-						<div className={` flex flex-row justify-center h-full items-center gap-2`}>
-							{imgs.map((img, i) => (
-								<img key={i} src={img}
-									 className=" w-16 h-full opacity-35 hover:opacity-50 transition-all" alt="icon"/>
-							))}
-						</div>
 					</div>
-				</div>
-			</div>
+					</div>
+					<div className="flex w-full flex-row gap-7">
+						<Card>
+							<CardHeader>
+								<CardTitle>Effortless Hashtag Generation</CardTitle>
+								<CardDescription>Instantly enhance your video's discoverability with our advanced AI-driven algorithm. Effortlessly generate search-friendly hashtags that boost your content's reach and engagement.</CardDescription>
+							</CardHeader>
+						</Card>
+						<Card>
+							<CardHeader>
+								<CardTitle>Dynamic Video Descriptions</CardTitle>
+								<CardDescription>Unleash the power of automation to craft compelling video descriptions. Our platform analyzes your content, extracts key insights, and generates captivating descriptions that grab your audience's attention.</CardDescription>
+							</CardHeader>
+						</Card>
+						<Card>
+							<CardHeader>
+								<CardTitle>Engaging Caption Creation</CardTitle>
+								<CardDescription>Elevate your video storytelling with our AI-powered caption generator. Craft engaging and search-friendly captions that captivate your audience, making your content more shareable and memorable.</CardDescription>
+							</CardHeader>
+						</Card>
+						<Card>
+							<CardHeader>
+								<CardTitle>Intuitive Thumbnail Design</CardTitle>
+								<CardDescription>Say goodbye to generic thumbnails! Transform your video titles into eye-catching visuals effortlessly. Our platform creates intuitive thumbnails that entice viewers and increase click-through rates for your content.</CardDescription>
+							</CardHeader>
+						</Card>
+					</div>
+				
 		</main>
 	);
 }

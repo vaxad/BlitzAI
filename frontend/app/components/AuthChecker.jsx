@@ -18,8 +18,10 @@ export default function AuthChecker() {
 		})
 		const data = await res.json()
 		if (data.user) {
+			setAuth(true)
 			setUser(data.user)
 		} else {
+			localStorage.removeItem("auth-token")
 			setAuth(false)
 		}
 
@@ -40,6 +42,8 @@ export default function AuthChecker() {
 				Logout()
 			}
 		} else {
+			if(auth)
+			setAuth(false)
 			if (!location.includes("auth") && location !== "/") {
 				navigate.push("/auth")
 			}

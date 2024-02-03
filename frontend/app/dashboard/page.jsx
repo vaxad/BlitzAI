@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select"
 import { CiBoxList } from "react-icons/ci";
 import { CiGrid42 } from "react-icons/ci";
+import { IoMdImages } from "react-icons/io";
 import { FaHashtag } from "react-icons/fa";
 import { LuGalleryThumbnails } from "react-icons/lu";
 import { BiCaptions } from "react-icons/bi";
