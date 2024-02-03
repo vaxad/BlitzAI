@@ -15,7 +15,7 @@ from reportlab.pdfgen import canvas
 from dotenv import load_dotenv
 from openai import OpenAI
 from pathlib import Path
-
+from ttsvoice import tts
 #API KEYs
 load_dotenv()
 GEMINI_KEY = os.getenv("GEMINI_KEY")
@@ -257,7 +257,17 @@ def generateThumbnailfromTitle():
         return jsonify({"result_url": result_url})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
-    
+
+@app.route('/tts', methods=["POST"])
+def tts_api():
+    try:
+        text = request.form['text']
+        voice = request.form['voice']
+        tempo = request.form['tempo']
+        tts(text,voice,tempo)
+        return jsonify({"result": "Success"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
 
 @app.route('/hello', methods=['GET']) 
 def helloworld(): 
