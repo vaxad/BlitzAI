@@ -1,5 +1,6 @@
 "use client"
 import Link from 'next/link'
+import Image from "next/image"
 import {usePathname} from 'next/navigation'
 import React from 'react'
 import {MdDeleteOutline, MdDescription, MdOutlineKeyboardVoice} from "react-icons/md";
@@ -10,9 +11,20 @@ import {BiCaptions} from "react-icons/bi";
 import {IoMdImages} from "react-icons/io";
 import {FaCubes} from "react-icons/fa6";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger,} from "@/components/ui/accordion"
+import {useTheme} from "next-themes";
+
+import LogoBlack from "@/public/assets/logo_black.png"
+import LogoWhite from "@/public/assets/logo_white.png"
+
+const themeMap = {
+	light: LogoBlack,
+	dark: LogoWhite
+}
 
 export default function SideNav() {
 	const path = usePathname()
+	const {theme, systemTheme} = useTheme()
+
 	const {auth} = store()
 	return (
 		<aside id="sidebar"
@@ -22,7 +34,8 @@ export default function SideNav() {
 				<div
 					className="flex h-full flex-col overflow-y-auto border-r border-slate-200 bg-white px-3 py-4 dark:border-slate-700 dark:bg-transparent">
 					<div className='flex flex-col w-full py-2'>
-						<img className=' w-44' src="/assets/logo_white.png" alt="logo"/>
+						<Image quality={100} className='w-44' src={themeMap[theme === "system" ? systemTheme : theme]}
+							   alt="logo"/>
 					</div>
 					<Accordion type="single" defaultValue='item-4' collapsible className="w-full">
 						<AccordionItem value="item-4" isActive={true}>
