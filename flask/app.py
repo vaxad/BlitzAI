@@ -1,5 +1,5 @@
 from io import BytesIO
-from flask import Flask, jsonify, request , send_file, make_response
+from flask import Flask, jsonify, request , send_file, make_response, send_from_directory
 from PIL import Image
 import google.generativeai as genai
 import PIL
@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from pathlib import Path
 from ttsvoice import tts
+from gtts import gTTS
 #API KEYs
 load_dotenv()
 GEMINI_KEY = os.getenv("GEMINI_KEY")
@@ -279,9 +280,19 @@ def generateThumbnailfromDescription():
 @app.route('/tts', methods=["POST"])
 def tts_api():
     try:
+        output_folder = "output_folder"  
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
         text = request.form['text']
         voice = request.form['voice']
         tempo = request.form['tempo']
+        engine = gTTS(text=text, lang='en', slow=(tempo == "low"))
+        audio_file_path = os.path.join(output_folder, 'output.mp3')
+        engine.save(audio_file_path)
+        return send_from_directory(output_folder, 'output.mp3', as_attachment=True)
+
+    except Exception as e:
+        return {'error': str(e)}, 500
         tts(text,voice,tempo)
         return jsonify({"result": "Success"})
     except Exception as e:
