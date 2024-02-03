@@ -13,7 +13,7 @@ export default function Login() {
   return (
     <Card className="w-fit ">
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold">Login</CardTitle>
+        <CardTitle className="text-3xl font-bold">Login</CardTitle>
         <CardDescription>Enter your username and password to login to your account</CardDescription>
       </CardHeader>
       <CardContent>
@@ -37,7 +37,7 @@ export default function Login() {
               Remember me
             </Label>
           </div>
-          <Button className="w-full" type="submit">
+          <Button className="w-fit" type="submit">
             Login
           </Button>
         </div>

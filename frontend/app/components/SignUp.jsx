@@ -10,8 +10,8 @@ export default function SignUp() {
       <Card>
         <CardContent>
           <div className="space-y-4 w-[60vh]">
-            <div className="space-y-2">
-              <h2 className="text-3xl py-2 pt-4 font-bold">Sign Up</h2>
+            <div className="space-y-1">
+              <h2 className="text-3xl y-2 pt-5 font-bold">Sign Up</h2>
               <p className="text-zinc-500 dark:text-zinc-400">
                Enter your details to Sign in.
               </p>
