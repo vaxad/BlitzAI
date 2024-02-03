@@ -15,7 +15,6 @@ const projectSchema = new mongoose.Schema({
 	},
 	script: {
 		type: String,
-		required: true
 	},
 	thumbnailLink: {
 		type: String
@@ -25,9 +24,13 @@ const projectSchema = new mongoose.Schema({
 	},
 	videoLink: {
 		type: String
+	},
+	trashStatus: {
+		type: Boolean,
+		default: false
 	}
 })
 
-const projectModel = mongoose.Model('datathon-3-project', projectSchema)
+const projectModel = mongoose.model('datathon-3-project', projectSchema)
 
 module.exports = projectModel
