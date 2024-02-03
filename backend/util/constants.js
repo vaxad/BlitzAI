@@ -1,6 +1,6 @@
 const VALID_PROJECT_TYPES = [
 	"title-to-thumbnail",
-	"title-to-voice",
+	"text-to-voice",
 	"title-to-images",
 	"video-to-hashtags",
 	"video-to-title-description",
