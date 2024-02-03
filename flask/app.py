@@ -269,6 +269,23 @@ def tts_api():
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
 
+@app.route('/createSummaryFromAudioText', methods=["POST"])
+def createSummaryFromAudioText():
+    try:
+        text = request.form['text']
+        no_words = request.form['no_words']
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": f"You are a youtube transcript summarizer designed to give output as text with {no_words} words"},
+                {"role": "user", "content": text}
+            ]
+        )
+        print(response.choices[0].message.content)
+        return jsonify({"result": response.choices[0].message.content})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
+    
 @app.route('/hello', methods=['GET']) 
 def helloworld(): 
 	if(request.method == 'GET'): 
