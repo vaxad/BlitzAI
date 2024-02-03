@@ -3,6 +3,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider"
 import SideNav from "./components/SideNav";
 import Navbar from "./components/Navbar";
+import { Toaster } from "@/components/ui/sonner"
+import AuthChecker from "./components/AuthChecker";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,6 +17,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body id="style-2" className={inter.className}>
+        <AuthChecker></AuthChecker>
       <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -24,6 +27,7 @@ export default function RootLayout({ children }) {
             </Navbar>
             <div className=" ml-[250px] mt-[80px]">
             {children}
+            <Toaster/>
             </div>
           </ThemeProvider></body>
     </html>
