@@ -101,7 +101,7 @@ const SIDE_NAV_LINKS = [
     sectionName: "Video",
     sectionLinks: [
       {
-        href: "/videos-to-hashtags",
+        href: "/video-to-hashtags",
         icon: FaHashtag,
         text: "Video to Hashtags"
       },
