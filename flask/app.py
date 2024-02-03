@@ -110,20 +110,6 @@ def ocr():
         return jsonify({'result': result.text})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-@app.route('/imagecaptioning', methods=['POST'])
-def imagecaptioning():
-    try:
-        image_file = request.files['image']
-        image_file.save("temp_image.jpg")
-        img = PIL.Image.open('temp_image.jpg')
-        model = genai.GenerativeModel('gemini-pro-vision')
-        result = model.generate_content([img,"Give a short description of what is happening in the image"],stream=True)
-        result.resolve()
-        os.remove("temp_image.jpg")
-        return jsonify({'result': result.text})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
     
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
@@ -181,6 +167,20 @@ def receiptgeneration():
     response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
 
     return response
+
+@app.route('/imagecaptioning', methods=['POST'])
+def imagecaptioning():
+    try:
+        image_file = request.files['image']
+        image_file.save("temp_image.jpg")
+        img = PIL.Image.open('temp_image.jpg')
+        model = genai.GenerativeModel('gemini-pro-vision')
+        result = model.generate_content([img,"Give a short description of what is happening in the image"],stream=True)
+        result.resolve()
+        os.remove("temp_image.jpg")
+        return jsonify({'result': result.text})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route("/getTranscipt", methods=["POST"])
 def getTranscipt():
@@ -293,8 +293,8 @@ def tts_api():
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
 
-@app.route('/createSummaryFromAudioText', methods=["POST"])
-def createSummaryFromAudioText():
+@app.route('/createSummaryFromTranscript', methods=["POST"])
+def createSummaryFromTranscript():
     try:
         text = request.form['text']
         no_words = request.form['no_words']
