@@ -9,7 +9,7 @@ export default function AuthChecker() {
 	const location = usePathname()
 	const backend_url = process.env.NEXT_PUBLIC_BACKEND_URL
 	const getMe = async (token) => {
-		const res = await fetch(`${backend_url}/auth/getuser`, {
+		const res = await fetch(`${backend_url}/auth/me`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -28,7 +28,7 @@ export default function AuthChecker() {
 		console.log(location)
 		if (auth) {
 			if(location.includes("auth")){
-				navigate.push("/home")
+				navigate.push("/dashboard")
 			}
 			const token = localStorage.getItem('auth-token')
 			if (token)
