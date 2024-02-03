@@ -28,6 +28,10 @@ const projectSchema = new mongoose.Schema({
 	trashStatus: {
 		type: Boolean,
 		default: false
+	},
+	lastUpdatedTimestamp: {
+		type: Date,
+		default: Date.now
 	}
 })
 

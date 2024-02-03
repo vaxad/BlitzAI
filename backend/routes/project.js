@@ -11,11 +11,13 @@ projectRouter.get(
 	"/",
 	fetchuser,
 	async (req, res) => {
+		const sortBy = req.query.sortBy || "name"
+
 		try {
 			const allProjects = await Project.find({
 				owner: req.user.id,
 				trashStatus: false
-			})
+			}, sortBy === "name" ? {name: 1} : {lastUpdatedTimestamp: -1})
 
 			return res.status(200).json({
 				projects: allProjects
@@ -31,10 +33,12 @@ projectRouter.get(
 	fetchuser,
 	async (req, res) => {
 		try {
+			const sortBy = req.query.sortBy || name
+
 			const allProjects = await Project.find({
 				owner: req.user.id,
 				trashStatus: true
-			})
+			}, sortBy === "name" ? {name: 1} : {lastUpdatedTimestamp: -1})
 
 			return res.status(200).json({
 				projects: allProjects
@@ -198,6 +202,8 @@ projectRouter.delete(
 
 			projectDoc.trashStatus = true;
 
+			projectDoc.lastUpdatedTimestamp = new Date()
+
 			await projectDoc.save()
 
 			return res.status(200).json({
@@ -239,6 +245,8 @@ projectRouter.post(
 			}
 
 			projectDoc.trashStatus = false;
+
+			projectDoc.lastUpdatedTimestamp = new Date()
 
 			await projectDoc.save()
 
