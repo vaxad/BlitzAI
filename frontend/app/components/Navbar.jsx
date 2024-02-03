@@ -64,6 +64,7 @@ const path=usePathname()
 							</MenubarSub>
 							<MenubarSeparator/>
 							<MenubarItem onClick={() => {
+                localStorage.clear()
                 localStorage.removeItem("auth-token")
 								Logout()
 							}} className="dark:bg-red-600 bg-red-500 hover:!bg-red-600 dark:hover:!bg-red-800">Log
