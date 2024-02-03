@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaCheck, FaCross } from "react-icons/fa";
+import { MdOutlineCancel, MdOutlineCheck } from "react-icons/md";
 import { useRouter } from "next/navigation"
 import { toast } from "sonner";
 import Loader from "../components/Loader";
@@ -12,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 export default function NewProject() {
 	const [projectTitle, setProjectTitle] = useState("")
 	const [num, setNum] = useState("10")
-	const [img, setImg] = useState(JSON.parse("{\n\"isKidsSafe\": true,\n\"valuesLearntfromvideo\": [\"Creativity and Innovation\", \"Adventure\", \"Friendship\", \"Understanding of different time periods\"]\n}"))
+	const [img, setImg] = useState(null)
 	const [loading, setLoading] = useState(false)
 	const navRouter = useRouter()
 	const handleSubmit = async (e) => {
@@ -25,9 +26,8 @@ export default function NewProject() {
 
 		const formData = new FormData()
 		formData.append("text", projectTitle)
-		formData.append("no_words", num)
 		console.log(formData)
-		const res = await fetch(`${process.env.NEXT_PUBLIC_FLASK_URL}/createTitlefromDescription`, {
+		const res = await fetch(`${process.env.NEXT_PUBLIC_FLASK_URL}/validateMadeforKidsfromSummary`, {
 			method: "POST",
 			redirect: 'follow',
 			body: formData
@@ -36,7 +36,7 @@ export default function NewProject() {
 		console.log(data)
 
 		if (data.result) {
-			setImg(data.result)
+			setImg(JSON.parse(data.result))
 		} else {
 			toast("An error occured")
 		}
@@ -69,7 +69,7 @@ export default function NewProject() {
 							</span>
 						</Button>
 						<span className={"text-3xl font-bold"}>
-							{`Generate video title from your script`}
+							{`Validate video script for age restriction`}
 						</span>
 					</div>
 					<hr />
@@ -80,40 +80,45 @@ export default function NewProject() {
 							</span>
 						</label>
 						<div className={"flex flex-row gap-4 items-start flex-grow"}>
-						<Textarea
+							<Textarea
 								id={"project-title"} rows={15} value={projectTitle} onChange={(e) => setProjectTitle(e.target.value)} placeholder={"Your Script"} className="w-full rounded-lg "></Textarea>
-
-							<Select value={num} onValueChange={setNum}>
-								<SelectTrigger className="w-fit">
-									<SelectValue className=" w-fit" placeholder="Number of words" />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectItem value={"8"}>8</SelectItem>
-									<SelectItem value={"10"}>10</SelectItem>
-									<SelectItem value={"15"}>15</SelectItem>
-								</SelectContent>
-							</Select>
 						</div>
 
 					</div>
 					<Button type="submit">
-						{img ? "Regenerate Title" : "Generate Title"}
+						{img ? "Revalidate Script" : "Validate Script"}
 					</Button>
 				</div>
 			</form>
 			{!loading ?
 				img ?
 					<div className={"flex flex-col gap-4 items-center justify-center w-10/12 px-4 py-8 flex-grow"}>
-						{img.isKidsSafe?<div className=" flex p-3 rounded-lg bg-gray-600 flex-row">
-							<div className=" flex flex-col justify-center items-start">
-								<h2 className=" font-semibold text-xl">{"Yes! This video is safe for kids."}</h2>
-								<p>{`Values learnt: ${img.valuesLearntfromvideo.join(", ")}.`}</p>
+						{img.isKidsSafe ?
+							<div className=" flex gap-3 p-3 w-full rounded-lg dark:bg-green-700 bg-green-200 flex-row">
+								<div className="flex flex-col justify-center items-center">
+									<div className="  h-8 w-8  rounded-full">
+										<MdOutlineCheck className="h-full w-full text-green-500 " />
+									</div>
+								</div>
+								<div className=" flex flex-col justify-center items-start">
+									<h2 className=" font-semibold text-xl">{"Yes! This video is safe for kids."}</h2>
+									<p>{`Values learnt: ${img.valuesLearntfromvideo.join(", ")}.`}</p>
+								</div>
+							</div> : 
+							<div className=" flex w-full gap-3 p-3 rounded-lg dark:bg-red-700 bg-red-200 flex-row">
+							<div className="flex flex-col justify-center items-center">
+								<div className="  h-8 w-8 rounded-full">
+									<MdOutlineCancel className="h-full text-red-500 w-full " />
+								</div>
 							</div>
-						</div>:<></>}
+							<div className=" flex flex-col justify-center items-start">
+								<h2 className=" font-semibold text-xl">{"Unfortunately, This video is not safe for kids!"}</h2>
+								<p>{`Make sure you dont use cuss words in your videos.`}</p>
+							</div>
+						</div> }
 						<div className=" flex flex-row justify-between w-full items-center">
-							<Button onClick={() => { handleDiscard() }} variant="secondary" className=" w-fit">Discard</Button>
-							{/* <a className="h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90" href={img} download="Varad's Resume">Download</a> */}
-							<Button onClick={() => { downloadImage() }}>Copy</Button>
+							{/* <Button onClick={() => { handleDiscard() }} variant="secondary" className=" w-fit">Discard</Button>
+							<Button onClick={() => { downloadImage() }}>Copy</Button> */}
 						</div>
 					</div> :
 					<></> :
