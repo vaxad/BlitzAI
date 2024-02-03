@@ -1,6 +1,6 @@
 import {Inter} from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ui/theme-provider"
+import {ThemeProvider} from "@/components/ui/theme-provider"
 import Navbar from "./components/Navbar";
 import {Toaster} from "@/components/ui/sonner"
 import AuthChecker from "./components/AuthChecker";
