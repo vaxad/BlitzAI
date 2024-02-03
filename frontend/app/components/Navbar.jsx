@@ -1,3 +1,4 @@
+"use client"
 import {
   Menubar,
   MenubarCheckboxItem,
@@ -19,18 +20,20 @@ import React from 'react'
 import SideNav from './SideNav'
 import {ModeToggle} from "@/components/ui/theme-toggle"
 import Link from "next/link"
+import store from "@/lib/zustand"
 
 export default function Navbar() {
+  const {auth} = store()
 	return (
 		<div
 			className=' fixed top-0 flex flex-row w-full px-4 py-4 gap-8 border-b border-slate-200 dark:border-slate-700 items-center justify-between dark:bg-transparent bg-slate-200 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10  '>
 			<SideNav/>
 			<Link href="/" className=" flex items-center rounded-lg px-3 py-2 text-slate-900 dark:text-white">
 				<img className=' w-8 h-8' src="https://img.icons8.com/ios-filled/50/ffffff/logo.png" alt="logo"/>
-				<span className="ml-3 text-base font-semibold">Hackoders</span>
+				<span className="ml-3 text-base font-semibold">Kratos</span>
 			</Link>
 			<div className=" flex flex-row gap-4 justify-center items-center w-fit">
-				<Menubar>
+				{auth?<Menubar>
 					<MenubarMenu>
 						<MenubarTrigger>File</MenubarTrigger>
 						<MenubarContent>
@@ -118,7 +121,14 @@ export default function Navbar() {
 
 						</MenubarContent>
 					</MenubarMenu>
-				</Menubar>
+				</Menubar>:
+    <Menubar>        
+      <MenubarMenu>
+      <Link className="flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none hover:bg-accent " href={"/auth"}>
+        Sign in
+      </Link>
+      </MenubarMenu>
+      </Menubar>}
 				<HoverCard>
 					<HoverCardTrigger>
 						<div className="flex flex-row">
