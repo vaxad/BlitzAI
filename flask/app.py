@@ -11,10 +11,18 @@ import supervision as sv
 import cv2
 import numpy as np
 from reportlab.pdfgen import canvas
+from dotenv import load_dotenv
+from openai import OpenAI
 
 #API KEYs
-genai.configure(api_key="AIzaSyAMBoESvU1tZn_3U1eWtp_9HRDbVf3XQ5c")
-rf = Roboflow(api_key="W9VikDr39oibIVgg5UOS")
+load_dotenv()
+GEMINI_KEY = os.getenv("GEMINI_KEY")
+ROBOFLOW_KEY = os.getenv("ROBOFLOW_KEY")
+OPENAI_KEY = os.getenv("OPENAI_KEY")
+
+genai.configure(api_key=GEMINI_KEY)
+rf = Roboflow(api_key=ROBOFLOW_KEY)
+openai_client = OpenAI(api_key=OPENAI_KEY)
 
 app = Flask(__name__) 
 CORS(app)
