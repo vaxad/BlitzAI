@@ -21,9 +21,9 @@ export default function NewProject() {
 		}
 
 		const formData = new FormData()
-		formData.append("title", projectTitle)
+		formData.append("prompt", projectTitle)
 		console.log(formData)
-		const res = await fetch(`${process.env.NEXT_PUBLIC_FLASK_URL}/generateThumbnailfromTitle`, {
+		const res = await fetch(`${process.env.NEXT_PUBLIC_FLASK_URL}/generateImage`, {
 			method: "POST",
 			redirect: 'follow',
 			body: formData
@@ -81,13 +81,13 @@ export default function NewProject() {
 									</span>
 						</Button>
 						<span className={"text-3xl font-bold"}>
-									{`Generate Thumbnail from Title`}
+									{`Convert your Prompt to Image`}
 								</span>
 					</div>
 					<hr/>
 					<div className={"flex flex-col gap-2 flex-grow"}>
 						<label htmlFor={"project-title"}>
-									<span>Title
+									<span>Prompt
 										<span className={"text-red-400"}>*</span>
 									</span>
 						</label>
@@ -101,7 +101,7 @@ export default function NewProject() {
 						
 					</div>
 					<Button type="submit">
-						{img?"Regenerate Thumbnail":"Generate Thumbnail"}
+						{img?"Regenerate Image":"Generate Image"}
 					</Button>
 				</div>
 			</form>

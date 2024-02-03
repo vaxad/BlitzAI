@@ -6,6 +6,7 @@ import {FaArrowLeft} from "react-icons/fa";
 import {useRouter} from "next/navigation"
 import { toast } from "sonner";
 import Loader from "../components/Loader";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function NewProject() {
 	const [projectTitle, setProjectTitle] = useState("")
@@ -21,9 +22,9 @@ export default function NewProject() {
 		}
 
 		const formData = new FormData()
-		formData.append("title", projectTitle)
+		formData.append("text", projectTitle)
 		console.log(formData)
-		const res = await fetch(`${process.env.NEXT_PUBLIC_FLASK_URL}/generateThumbnailfromTitle`, {
+		const res = await fetch(`${process.env.NEXT_PUBLIC_FLASK_URL}/generateThumbnailfromDescription`, {
 			method: "POST",
 			redirect: 'follow',
 			body: formData
@@ -81,18 +82,19 @@ export default function NewProject() {
 									</span>
 						</Button>
 						<span className={"text-3xl font-bold"}>
-									{`Generate Thumbnail from Title`}
+									{`Generate Thumbnail from your Script`}
 								</span>
 					</div>
 					<hr/>
 					<div className={"flex flex-col gap-2 flex-grow"}>
 						<label htmlFor={"project-title"}>
-									<span>Title
+									<span>Script
 										<span className={"text-red-400"}>*</span>
 									</span>
 						</label>
 						<div className={"flex flex-row gap-4 items-center flex-grow"}>
-							<Input
+							<Textarea
+								rows={15}
 								id={"project-title"}
 								value={projectTitle} onChange={(e) => setProjectTitle(e.target.value)}
 								placeholder={"Your Title"}

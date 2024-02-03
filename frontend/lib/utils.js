@@ -44,14 +44,15 @@ export async function manageMedia(
 			const apiResp = await fetch(
 				`${process.env.NEXT_PUBLIC_BACKEND_URL}/meta/presigned-url`,
 				{
+					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
 						"auth-token": window.localStorage.getItem("auth-token")
 					},
-					body: {
+					body: JSON.stringify({
 						objectKey: objectKey,
 						requestMethod: fileMethod
-					}
+					})
 				}
 			)
 
@@ -61,6 +62,7 @@ export async function manageMedia(
 				const s3Resp = await fetch(
 					presignedUrl,
 					{
+						method: fileMethod,
 						headers: {
 							"Content-Type": fileObj.type
 						},
@@ -68,11 +70,9 @@ export async function manageMedia(
 					},
 				)
 
-				if (s3Resp.ok) {
-					return true
-				}
+				return s3Resp.ok;
 
-				return false
+
 			}
 
 			return false
@@ -80,4 +80,47 @@ export async function manageMedia(
 	)
 
 	return mediaResponses
+}
+
+export async function createProject({projectName, projectType}) {
+	const response = await fetch(
+		`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects`,
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"auth-token": localStorage.getItem("auth-token") || ""
+			},
+			body: JSON.stringify({
+				name: projectName,
+				type: projectType
+			})
+		}
+	)
+
+	if (response.ok) {
+		const {project} = await response.json()
+		return project._id
+	}
+
+	return null
+}
+
+export async function updateProject({id, inputType, input, outputType, output}) {
+	const response = await fetch(
+		`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects/${id}`,
+		{
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				inputType,
+				input,
+				outputType
+			})
+		}
+	)
+
+	return response.ok
 }

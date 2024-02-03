@@ -18,7 +18,7 @@ export default function NewProject() {
 
 			<form onSubmit={createNewProject} className={"flex-grow w-full p-4"}>
 				<div className={"flex flex-col gap-4"}>
-					<div className={"flex flex-row gap-4 items-center"}>
+					<div className={"flex flex-row gap-4 items-center pt-10"}>
 						<Button
 							onClick={(e) => {
 								e.preventDefault()
