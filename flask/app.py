@@ -66,8 +66,6 @@ def predict_emotiondetection(image):
         'disgust': (255, 0, 255)
     }
     prediction = model.predict(image, confidence=40, overlap=30).json()
-
-    print(prediction)
     for p in prediction['predictions']:
         center_x, center_y = int(p['x']), int(p['y'])
         w, h = int(p['width']), int(p['height'])
@@ -219,11 +217,42 @@ def generateAlternateThumbnail():
         result_url=[]
         for i in range(n_thumbnails):
             result_url.append(response.data[i].url)
-        print(result_url)
         return jsonify({"result_url": result_url})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route("/editImagewithPrompt", methods=["POST"])
+def editImagewithPrompt():
+    try:
+        image_file = request.files['image']
+        mask_file = request.files['mask']
+        prompt = request.form['prompt']
+
+        image = Image.open(image_file)
+        image = image.resize((1024,1024))
+        image_byte_stream = BytesIO()
+        image.save(image_byte_stream, format='PNG')
+        image_byte_array = image_byte_stream.getvalue()
+
+        mask = Image.open(mask_file)
+        mask = mask.resize((1024,1024))
+        mask_byte_stream = BytesIO()
+        mask.save(mask_byte_stream, format='PNG')
+        mask_byte_array = mask_byte_stream.getvalue()
+
+        response = client.images.edit(
+            image=image_byte_array,
+            mask=mask_byte_array,
+            model="dall-e-2",
+            prompt=prompt,
+            n=1,
+            size="1024x1024"
+        )
+        result_url=response.data[0].url
+        return jsonify({"result_url": result_url})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
 @app.route("/generateImage", methods=["POST"])
 def generateImage():
     try:
@@ -236,7 +265,6 @@ def generateImage():
             n=1,
         )
         result_url=response.data[0].url
-        print(result_url)
         return jsonify({"result_url": result_url})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
@@ -254,7 +282,6 @@ def generateThumbnailfromTitle():
             n=1,
         )
         result_url=response.data[0].url
-        print(result_url)
         return jsonify({"result_url": result_url})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
@@ -272,7 +299,6 @@ def generateThumbnailfromDescription():
             n=1,
         )
         result_url=response.data[0].url
-        print(result_url)
         return jsonify({"result_url": result_url})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
@@ -287,11 +313,6 @@ def tts_api():
         voice = request.form['voice']
         tempo = request.form['tempo']
         engine = gTTS(text=text, lang='en', slow=(tempo == "low"))
-        voices = engine.getProperty('voices')
-        if voice=="male":
-            engine.setProperty('voice', voices[0].id)
-        elif voice=="female":
-            engine.setProperty('voice', voices[1].id)
         audio_file_path = os.path.join(output_folder, 'output.mp3')
         engine.save(audio_file_path)
         return send_from_directory(output_folder, 'output.mp3', as_attachment=True)
@@ -310,7 +331,6 @@ def createSummaryFromTranscript():
                 {"role": "user", "content": text}
             ]
         )
-        print(response.choices[0].message.content)
         return jsonify({"result": response.choices[0].message.content})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
@@ -328,7 +348,6 @@ def createTitlefromDescription():
                 {"role": "user", "content": text}
             ]
         )
-        print(response.choices[0].message.content)
         return jsonify({"result": response.choices[0].message.content})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
@@ -345,7 +364,6 @@ def createScriptfromDescription():
                 {"role": "user", "content": text}
             ]
         )
-        print(response.choices[0].message.content)
         return jsonify({"result": response.choices[0].message.content})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
@@ -362,7 +380,6 @@ def createDescriptionfromTitle():
                 {"role": "user", "content": text}
             ]
         )
-        print(response.choices[0].message.content)
         return jsonify({"result": response.choices[0].message.content})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
@@ -379,7 +396,6 @@ def generateScriptfromTitle():
                 {"role": "user", "content": text}
             ]
         )
-        print(response.choices[0].message.content)
         return jsonify({"result": response.choices[0].message.content})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
@@ -396,7 +412,6 @@ def createHashTagsfromDescription():
                 {"role": "user", "content": text}
             ]
         )
-        print(response.choices[0].message.content)
         return jsonify({"result": response.choices[0].message.content})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
@@ -412,7 +427,6 @@ def validateMadeforKidsfromSummary():
                 {"role": "user", "content": text}
             ]
         )
-        print(response.choices[0].message.content)
         return jsonify({"result": response.choices[0].message.content})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -429,7 +443,6 @@ def createDescriptionfromScript():
                 {"role": "user", "content": text}
             ]
         )
-        print(response.choices[0].message.content)
         return jsonify({"result": response.choices[0].message.content})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
@@ -446,7 +459,6 @@ def createHashTagsfromScript():
                 {"role": "user", "content": text}
             ]
         )
-        print(response.choices[0].message.content)
         return jsonify({"result": response.choices[0].message.content})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
@@ -463,7 +475,6 @@ def createTitlefromScript():
                 {"role": "user", "content": text}
             ]
         )
-        print(response.choices[0].message.content)
         return jsonify({"result": response.choices[0].message.content})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
@@ -481,7 +492,6 @@ def generateThumbnailfromScript():
             n=1,
         )
         result_url=response.data[0].url
-        print(result_url)
         return jsonify({"result_url": result_url})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
