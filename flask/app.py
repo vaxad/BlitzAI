@@ -1,5 +1,5 @@
 from io import BytesIO
-from flask import Flask, jsonify, request , send_file, make_response
+from flask import Flask, jsonify, request , send_file, make_response, send_from_directory
 from PIL import Image
 import google.generativeai as genai
 import PIL
@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from pathlib import Path
 from ttsvoice import tts
+from gtts import gTTS
 #API KEYs
 load_dotenv()
 GEMINI_KEY = os.getenv("GEMINI_KEY")
@@ -109,20 +110,6 @@ def ocr():
         return jsonify({'result': result.text})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-@app.route('/imagecaptioning', methods=['POST'])
-def imagecaptioning():
-    try:
-        image_file = request.files['image']
-        image_file.save("temp_image.jpg")
-        img = PIL.Image.open('temp_image.jpg')
-        model = genai.GenerativeModel('gemini-pro-vision')
-        result = model.generate_content([img,"Give a short description of what is happening in the image"],stream=True)
-        result.resolve()
-        os.remove("temp_image.jpg")
-        return jsonify({'result': result.text})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
     
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
@@ -181,11 +168,25 @@ def receiptgeneration():
 
     return response
 
+@app.route('/imagecaptioning', methods=['POST'])
+def imagecaptioning():
+    try:
+        image_file = request.files['image']
+        image_file.save("temp_image.jpg")
+        img = PIL.Image.open('temp_image.jpg')
+        model = genai.GenerativeModel('gemini-pro-vision')
+        result = model.generate_content([img,"Give a short description of what is happening in the image"],stream=True)
+        result.resolve()
+        os.remove("temp_image.jpg")
+        return jsonify({'result': result.text})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 @app.route("/getTranscipt", methods=["POST"])
 def getTranscipt():
     try:
         audio_file = request.files['audio']
-        if audio_file and audio_file.filename.endswith(('.mp3', '.wav', '.flac')):
+        if audio_file and audio_file.filename.endswith(('.mp3', '.wav', '.flac','mp4')):
             audio_path = os.path.join(temp_folder, audio_file.filename)
             audio_file.save(audio_path)
             transcript = client.audio.transcriptions.create(
@@ -258,19 +259,42 @@ def generateThumbnailfromTitle():
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
 
-@app.route('/tts', methods=["POST"])
-def tts_api():
+@app.route("/generateThumbnailfromDescription", methods=["POST"])
+def generateThumbnailfromDescription():
     try:
         text = request.form['text']
-        voice = request.form['voice']
-        tempo = request.form['tempo']
-        tts(text,voice,tempo)
-        return jsonify({"result": "Success"})
+        prompt = f"Generate youtube thumbnail for youtube description : {text}"
+        response = client.images.generate(
+            model="dall-e-3",
+            prompt=prompt,
+            size="1792x1024",
+            quality="standard",
+            n=1,
+        )
+        result_url=response.data[0].url
+        print(result_url)
+        return jsonify({"result_url": result_url})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
 
-@app.route('/createSummaryFromAudioText', methods=["POST"])
-def createSummaryFromAudioText():
+@app.route('/tts', methods=["POST"])
+def tts_api():
+    try:
+        output_folder = "output_folder"  
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+        text = request.form['text']
+        voice = request.form['voice']
+        tempo = request.form['tempo']
+        engine = gTTS(text=text, lang='en', slow=(tempo == "low"))
+        audio_file_path = os.path.join(output_folder, 'output.mp3')
+        engine.save(audio_file_path)
+        return send_from_directory(output_folder, 'output.mp3', as_attachment=True)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
+
+@app.route('/createSummaryFromTranscript', methods=["POST"])
+def createSummaryFromTranscript():
     try:
         text = request.form['text']
         no_words = request.form['no_words']
@@ -321,6 +345,39 @@ def createDescriptionfromTitle():
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
     
+@app.route('/createHashTagsfromDescription', methods=["POST"])
+def createHashTagsfromDescription():
+    try:
+        text = request.form['text']
+        no_words = request.form['no_words']
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": f"You are a youtube hashtag generator from video description designed to give output as text with {no_words} hashtags"},
+                {"role": "user", "content": text}
+            ]
+        )
+        print(response.choices[0].message.content)
+        return jsonify({"result": response.choices[0].message.content})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
+    
+@app.route('/validateMadeforKidsfromSummary', methods=["POST"])
+def validateMadeforKidsfromSummary():
+    try:
+        text = request.form['text']
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": f"You are a youtube made for kids validator from video summary give output as a json format with keys isKidsSafe and valuesLearntfromvideo"},
+                {"role": "user", "content": text}
+            ]
+        )
+        print(response.choices[0].message.content)
+        return jsonify({"result": response.choices[0].message.content})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/hello', methods=['GET']) 
 def helloworld(): 
 	if(request.method == 'GET'): 

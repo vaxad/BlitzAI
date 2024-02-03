@@ -2,8 +2,10 @@ const express = require('express');
 const Project = require('../models/Project');
 const {body, validationResult} = require('express-validator');
 const fetchuser = require('../middleware/fetchuser');
+const constants = require("../util/constants")
 
 const projectRouter = express.Router()
+
 
 projectRouter.get(
 	"/",
@@ -48,8 +50,8 @@ projectRouter.post(
 	"/",
 	fetchuser,
 	[
-		body("title", "Title cannot be empty").isString(),
-		body("prompt", "Provide a starting prompt").isString()
+		body("name", "Title cannot be empty").isString(),
+		body("type").isIn(constants.VALID_PROJECT_TYPES)
 	],
 	async (req, res) => {
 		const valRes = validationResult(req)
@@ -63,13 +65,8 @@ projectRouter.post(
 
 		const projectDoc = new Project({
 			owner: userId,
-			title: req.body.title,
-			prompt: req.body.prompt,
-			script: "",
-			thumbnailLink: "",
-			voiceoverLink: "",
-			videoLink: "",
-			trashStatus: false
+			name: req.body.name,
+			type: req.body.type
 		})
 
 		await projectDoc.save()
