@@ -206,11 +206,9 @@ def generateAlternateThumbnail():
         image_file = request.files['image']
         n_thumbnails = int(request.form['n_thumbnails'])
         image = Image.open(image_file)
-
         byte_stream = BytesIO()
         image.save(byte_stream, format='PNG')
         byte_array = byte_stream.getvalue()
-
         response = client.images.create_variation(
             image=byte_array,
             n=n_thumbnails,
@@ -224,6 +222,42 @@ def generateAlternateThumbnail():
         return jsonify({"result_url": result_url})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route("/generateImage", methods=["POST"])
+def generateImage():
+    try:
+        prompt = request.form['prompt']
+        response = client.images.generate(
+            model="dall-e-3",
+            prompt=prompt,
+            size="1792x1024",
+            quality="standard",
+            n=1,
+        )
+        result_url=response.data[0].url
+        print(result_url)
+        return jsonify({"result_url": result_url})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
+
+@app.route("/generateThumbnailfromTitle", methods=["POST"])
+def generateThumbnailfromTitle():
+    try:
+        title = request.form['title']
+        prompt = f"Generate youtube thumbnail for youtube title : {title}"
+        response = client.images.generate(
+            model="dall-e-3",
+            prompt=prompt,
+            size="1792x1024",
+            quality="standard",
+            n=1,
+        )
+        result_url=response.data[0].url
+        print(result_url)
+        return jsonify({"result_url": result_url})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
+    
 
 @app.route('/hello', methods=['GET']) 
 def helloworld(): 
