@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 
 export default function Login() {
   return (
-    <Card className="mx-auto max-w-sm">
+    <Card className="w-fit ">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold">Login</CardTitle>
         <CardDescription>Enter your username and password to login to your account</CardDescription>
