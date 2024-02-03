@@ -23,11 +23,6 @@
     "mongoose": "^7.1.0",
     "supertest": "^6.3.3"
   },
-  "jest": {
-    "setupFiles": [
-      "C:/Users/varad/OneDrive/Desktop/projects/react/backendBasic/tests/setup.js"
-    ]
-  },
   "devDependencies": {
     "jest": "^29.7.0",
     "nodemon": "^2.0.22"

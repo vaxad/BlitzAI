@@ -20,7 +20,7 @@ import Link from "next/link"
 
 export default function Navbar() {
   return (
-    <div className=' fixed top-0 flex flex-row w-full px-4 py-4 gap-8 items-center justify-between dark:bg-transparent bg-slate-200 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10  '>
+    <div className=' fixed top-0 flex flex-row w-full px-4 py-4 gap-8 border-b border-slate-200 dark:border-slate-700 items-center justify-between dark:bg-transparent bg-slate-200 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10  '>
         <SideNav/>
         <Link href="/" className=" flex items-center rounded-lg px-3 py-2 text-slate-900 dark:text-white">
       <img className=' w-8 h-8' src="https://img.icons8.com/ios-filled/50/ffffff/logo.png" alt="logo"/>

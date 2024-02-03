@@ -5,7 +5,7 @@ import Link from "next/link"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 
-export default function Component() {
+export default function Login() {
   return (
     <Card className="mx-auto max-w-sm">
       <CardHeader className="space-y-1">
