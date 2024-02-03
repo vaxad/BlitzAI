@@ -4,8 +4,10 @@ import Head from "next/head"
 import ProjectModal from "@/app/components/ProjectModal";
 import {useRouter, useSearchParams} from "next/navigation";
 import {Input} from "@/components/ui/input";
-import {getProjectById, updateProject} from "@/lib/utils";
+import {getProjectById, getReadonlyURL, manageMedia, updateProject} from "@/lib/utils";
 import {toast} from "sonner"
+import store from "@/lib/zustand";
+import {Button} from "@/components/ui/button";
 
 export default function VideoToHashtags() {
 	const [projectId, setProjectId] = useState("")
@@ -13,8 +15,12 @@ export default function VideoToHashtags() {
 	const [projectCreated, setProjectCreated] = useState(false)
 	const [inputFile, setInputFile] = useState(null)
 	const [videoURL, setVideoURL] = useState("")
+	const [projectOutput, setProjectOutput] = useState("")
+
 
 	const navigate = useRouter()
+
+	const {auth, user} = store()
 
 	const searchParams = useSearchParams()
 
@@ -37,6 +43,7 @@ export default function VideoToHashtags() {
 					setProjectName(name)
 					setProjectId(_id)
 					setVideoURL(input || "")
+					setProjectOutput(output)
 				}
 			})
 		}
@@ -44,7 +51,50 @@ export default function VideoToHashtags() {
 
 
 	const generateVideoHashtags = async () => {
+		if (inputFile) {
+			const formData = new FormData()
+			formData.append("audio", inputFile)
 
+			const res = await fetch(
+				`${process.env.NEXT_PUBLIC_FLASK_URL}/getTranscipt`,
+				{
+					method: "POST",
+					redirect: "follow",
+					body: formData
+				}
+			)
+
+			if (res.ok) {
+				const output = await res.json()
+				if (output.transcript) {
+					const transcriptData = new FormData()
+					transcriptData.append("text", output.transcript)
+					transcriptData.append("no_words", 10)
+
+					const transcriptToHashtagRes = await fetch(
+						`${process.env.NEXT_PUBLIC_FLASK_URL}/createHashTagsfromDescription`,
+						{
+							method: "POST",
+							redirect: "follow",
+							body: transcriptData
+						}
+					)
+
+					if (transcriptToHashtagRes.ok) {
+						const {result} = await transcriptToHashtagRes.json()
+
+						setProjectOutput(result)
+						await updateProject({
+							id: projectId,
+							input: videoURL,
+							inputType: "video",
+							output: result,
+							outputType: "text"
+						})
+					}
+				}
+			}
+		}
 	}
 
 	const onProjectCreate = ({projectName, projectType, id}) => {
@@ -60,6 +110,37 @@ export default function VideoToHashtags() {
 		})
 	}
 
+	const onFileChange = async (e) => {
+		e.preventDefault()
+		if (!auth || !user) {
+			return
+		}
+		const newInputFile = e.target.files[0] || null
+		setInputFile(newInputFile)
+		if (newInputFile === null) return
+
+		const [isSuccess] = await manageMedia(
+			[newInputFile],
+			{
+				requestMethods: ["PUT"],
+				keygenFn: (fileObj, fileIdx) => {
+					return `users/${user._id}/projects/${projectId}`
+				}
+			}
+		)
+
+		if (isSuccess) {
+			const vidUrl = await getReadonlyURL(`/users/${user._id}/projects/${projectId}`)
+			await updateProject({
+				id: projectId,
+				input: vidUrl,
+				inputType: "video",
+				output: "",
+				outputType: 'text'
+			})
+			setVideoURL(vidUrl)
+		}
+	}
 
 	return (
 		<>
@@ -77,7 +158,10 @@ export default function VideoToHashtags() {
 				) : (
 					<div className={"flex flex-grow h-[90vh] flex-col justify-center gap-4 items-center"}>
 						<form
-							onSubmit={(e) => e.preventDefault()}
+							onSubmit={(e) => {
+								e.preventDefault()
+								generateVideoHashtags()
+							}}
 							className={"p-8 w-full flex flex-col flex-grow gap-4"}
 						>
 							<h3 className={"font-bold text-3xl"}>{projectName}</h3>
@@ -90,11 +174,38 @@ export default function VideoToHashtags() {
 									id={"video-picker"}
 									type={"file"}
 									accept={"video/*"}
-									onChange={(e) => {
-										e.preventDefault()
-										setInputFile(e.target.files[0] || null)
-									}}
+									onChange={onFileChange}
 								/>
+								{
+									videoURL ? (
+										<video controls className={"max-h-[30vh]"}>
+											<source src={videoURL}/>
+											Your browser does not support HTML5 Video
+										</video>
+									) : (
+										null
+									)
+								}
+								<Button type={"submit"}>Generate Hashtags</Button>
+								<hr/>
+								{
+									projectOutput.length > 0 ? (
+										<>
+											<h3 className={"font-bold text-3xl"}>
+												Generated Hashtags -
+											</h3>
+											{
+												projectOutput.split(" ").map((hashTag) => {
+													return (
+														<Button variant={"secondary"} key={hashTag}>{hashTag}</Button>
+													)
+												})
+											}
+										</>
+									) : (
+										null
+									)
+								}
 							</div>
 						</form>
 					</div>

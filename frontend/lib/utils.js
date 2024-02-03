@@ -5,34 +5,62 @@ export function cn(...inputs) {
 	return twMerge(clsx(inputs))
 }
 
+export async function getReadonlyURL(objectKey) {
+	try {
+		const apiResp = await fetch(
+			`${process.env.NEXT_PUBLIC_BACKEND_URL}/meta/presigned-url`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"auth-token": window.localStorage.getItem("auth-token")
+				},
+				body: JSON.stringify({
+					objectKey: objectKey,
+					requestMethod: "GET"
+				})
+			}
+		)
+
+		if (apiResp.ok) {
+			const responseData = await apiResp.json()
+			return responseData.presignedUrl
+		}
+		return null
+	} catch (err) {
+		console.error(err)
+		return null
+	}
+}
+
 export async function manageMedia(
-	files, options
+	files, {requestMethods, keygenFn}
 ) {
-	if (files === undefined || !Array.isArray(files) || options === undefined || options === {}) {
+	if (files === undefined || !Array.isArray(files) || keygenFn === undefined || requestMethods === undefined) {
 		return Array(files.length).fill(false)
 	}
 
-	if (!(options.requestMethods) || !(options.keygenFn)) {
+	if (!(requestMethods) || !(keygenFn)) {
 		return Array(files.length).fill(false)
 	}
 
 	let fileMethods;
-	if (Array.isArray(options.requestMethods)) {
-		if (options.requestMethods.length === 0) {
+	if (Array.isArray(requestMethods)) {
+		if (requestMethods.length === 0) {
 			return Array(files.length).fill(false)
 		}
-		if (options.requestMethods.length !== files.length) {
-			fileMethods = Array(files.length).fill(options.requestMethods[0])
+		if (requestMethods.length !== files.length) {
+			fileMethods = Array(files.length).fill(requestMethods[0])
 		} else {
-			fileMethods = options.requestMethods
+			fileMethods = requestMethods
 		}
 	} else {
-		fileMethods = Array(files.length).fill(options.requestMethods[0])
+		fileMethods = Array(files.length).fill(requestMethods[0])
 	}
 
 	const objectKeys = files.map((fileObj, fileIdx) => {
 		return (
-			options.keygenFn(fileObj, fileIdx)
+			keygenFn(fileObj, fileIdx)
 		)
 	})
 
