@@ -65,7 +65,7 @@ export default function Navbar() {
                 <MenubarItem>FAQs</MenubarItem>
               </MenubarSub>
               <MenubarSeparator />
-              <MenubarItem onClick={()=>{Logout()}} className="dark:bg-red-600 bg-red-500 hover:!bg-red-600 dark:hover:!bg-red-800">Log out</MenubarItem>
+              <MenubarItem onClick={()=>{localStorage.setItem("auth-token",null); Logout()}} className="dark:bg-red-600 bg-red-500 hover:!bg-red-600 dark:hover:!bg-red-800">Log out</MenubarItem>
             </MenubarContent>
           </MenubarMenu>
           </Menubar>:<></>}

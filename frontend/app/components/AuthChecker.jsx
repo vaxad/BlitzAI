@@ -25,19 +25,22 @@ export default function AuthChecker() {
 
 	}
 	useEffect(() => {
-		console.log(location)
-		if (auth) {
+		console.log(localStorage.getItem("auth-token"))
+		if (localStorage.getItem("auth-token")) {
 			if(location.includes("auth")){
 				navigate.push("/dashboard")
 			}
 			const token = localStorage.getItem('auth-token')
 			if (token)
 				getMe(token)
-			else
+			else{
+				localStorage.setItem("auth-token",null)
 				Logout()
+			}
 		} else {
-			localStorage.setItem("auth-token", null)
-			if (!location.includes("auth") && location !== "/") {
+			if(localStorage.getItem('auth-token')){
+				setAuth(true)
+			}else if (!location.includes("auth") && location !== "/") {
 				navigate.push("/auth")
 			}
 		}
