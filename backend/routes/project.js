@@ -65,7 +65,8 @@ projectRouter.post(
 
 		const projectDoc = new Project({
 			owner: userId,
-			name: req.body.name
+			name: req.body.name,
+			type: req.body.type
 		})
 
 		await projectDoc.save()

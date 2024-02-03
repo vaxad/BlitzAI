@@ -12,7 +12,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 router.post('/signup', [
 	body('email', 'Enter a valid email').isEmail(),
 	body('name', 'Enter a valid name').isString(),
-	body('password', 'Password must have at least one digit, one lowercase and one uppercase letter, and be at least 6 characters long').matches(/^\w{6,}$/)
+	body('password', 'Password must have at least one digit, one lowercase and one uppercase letter, and be at least 6 characters long').isLength({min: 6})
 ], async (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
@@ -92,7 +92,7 @@ router.put(
 	fetchuser,
 	async (req, res) => {
 		const userDoc = await User.findById(req.user.id)
-		
+
 	}
 )
 
