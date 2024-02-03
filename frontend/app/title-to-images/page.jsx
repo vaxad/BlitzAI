@@ -12,9 +12,6 @@ export default function NewProject() {
 
 	const navRouter = useRouter()
 
-	const createNewProject = () => {
-
-	}
 
 	return (
 		<div className={"flex flex-grow h-[90vh] flex-col justify-center items-center"}>
