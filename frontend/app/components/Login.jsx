@@ -6,20 +6,52 @@ import Link from "next/link"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
+import { toast } from "sonner"
+import store from "@/lib/zustand"
 
 export default function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const {setAuth} = store()
+  const handleLogin = async(e) => {
+    e.preventDefault()
+    if(password.length<6){
+      toast("Password should be atleast 6 characters long")
+      return
+    }
+    if(email.length<3){
+      toast("Enter a valid email address")
+      return
+    }
+    console.log(email, password)
+    const url = process.env.NEXT_PUBLIC_BACKEND_URL
+    const res = await fetch(`${url}/auth/login`,{
+      method:"POST",
+      headers:{
+        "Content-type":"application/json"
+      },
+      body:JSON.stringify({ email, password})
+    })
+    const data = await res.json()
+    if(data.error||data.errors){
+      console.log(data.error)
+      toast(data.error.length>0?data.error:"An error occured")
+    }else{
+      setAuth(true)
+      localStorage.setItem("auth-token",data.authToken)
+      toast("Logged in successfully")
+    }
+  }
   return (
     <Card className="w-fit ">
       <CardHeader className="space-y-1">
         <CardTitle className="text-3xl font-bold">Login</CardTitle>
-        <CardDescription>Enter your username and password to login to your account</CardDescription>
+        <CardDescription>Enter your email and password to login to your account</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
+        <form onSubmit={(e)=>{handleLogin(e)}} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="username">Username</Label>
+            <Label htmlFor="email">Email</Label>
             <Input value={email} onChange={(e)=>{setEmail(e.target.value)}} id="email" placeholder="Enter your email" required type="email" />
           </div>
           <div className="relative space-y-2">
@@ -40,7 +72,7 @@ export default function Login() {
           <Button className="w-fit" type="submit">
             Login
           </Button>
-        </div>
+        </form>
       </CardContent>
     </Card>
   )
