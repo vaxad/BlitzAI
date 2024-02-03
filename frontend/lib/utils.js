@@ -112,7 +112,8 @@ export async function updateProject({id, inputType, input, outputType, output}) 
 		{
 			method: "PUT",
 			headers: {
-				"Content-Type": "application/json"
+				"Content-Type": "application/json",
+				"auth-token": localStorage.getItem("auth-token") || ""
 			},
 			body: JSON.stringify({
 				inputType,
@@ -123,4 +124,42 @@ export async function updateProject({id, inputType, input, outputType, output}) 
 	)
 
 	return response.ok
+}
+
+export async function getProjects() {
+	const response = await fetch(
+		`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects`,
+		{
+			method: "GET",
+			headers: {
+				"auth-token": localStorage.getItem("auth-token") || ""
+			}
+		}
+	)
+
+	if (response.ok) {
+		const respData = await response.json()
+		return respData.projects
+	}
+
+	return null
+}
+
+export async function getProjectById(id) {
+	const response = await fetch(
+		`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects/${id}`,
+		{
+			method: "GET",
+			headers: {
+				"auth-token": localStorage.getItem("auth-token") || ""
+			}
+		}
+	)
+
+	if (response.ok) {
+		const respData = await response.json()
+		return respData.project
+	}
+
+	return null
 }
