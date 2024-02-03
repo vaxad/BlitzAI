@@ -185,7 +185,7 @@ def receiptgeneration():
 def getTranscipt():
     try:
         audio_file = request.files['audio']
-        if audio_file and audio_file.filename.endswith(('.mp3', '.wav', '.flac')):
+        if audio_file and audio_file.filename.endswith(('.mp3', '.wav', '.flac','mp4')):
             audio_path = os.path.join(temp_folder, audio_file.filename)
             audio_file.save(audio_path)
             transcript = client.audio.transcriptions.create(
@@ -245,6 +245,24 @@ def generateThumbnailfromTitle():
     try:
         title = request.form['title']
         prompt = f"Generate youtube thumbnail for youtube title : {title}"
+        response = client.images.generate(
+            model="dall-e-3",
+            prompt=prompt,
+            size="1792x1024",
+            quality="standard",
+            n=1,
+        )
+        result_url=response.data[0].url
+        print(result_url)
+        return jsonify({"result_url": result_url})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
+
+@app.route("/generateThumbnailfromDescription", methods=["POST"])
+def generateThumbnailfromDescription():
+    try:
+        text = request.form['text']
+        prompt = f"Generate youtube thumbnail for youtube description : {text}"
         response = client.images.generate(
             model="dall-e-3",
             prompt=prompt,
@@ -321,6 +339,23 @@ def createDescriptionfromTitle():
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
     
+@app.route('/createHashTagsfromDescription', methods=["POST"])
+def createHashTagsfromDescription():
+    try:
+        text = request.form['text']
+        no_words = request.form['no_words']
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": f"You are a youtube hashtag generator from video description designed to give output as text with {no_words} hashtags"},
+                {"role": "user", "content": text}
+            ]
+        )
+        print(response.choices[0].message.content)
+        return jsonify({"result": response.choices[0].message.content})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
+
 @app.route('/hello', methods=['GET']) 
 def helloworld(): 
 	if(request.method == 'GET'): 
