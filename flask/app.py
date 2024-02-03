@@ -13,6 +13,7 @@ import numpy as np
 from reportlab.pdfgen import canvas
 from dotenv import load_dotenv
 from openai import OpenAI
+from pathlib import Path
 
 #API KEYs
 load_dotenv()
@@ -22,12 +23,13 @@ OPENAI_KEY = os.getenv("OPENAI_KEY")
 
 genai.configure(api_key=GEMINI_KEY)
 rf = Roboflow(api_key=ROBOFLOW_KEY)
-openai_client = OpenAI(api_key=OPENAI_KEY)
+client = OpenAI(api_key=OPENAI_KEY)
 
 app = Flask(__name__) 
 CORS(app)
 
 #CONSTANTS
+temp_folder = tempfile.mkdtemp()
 
 #Functions
 def remove_special_characters(text):
@@ -177,6 +179,25 @@ def receiptgeneration():
     response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
 
     return response
+
+@app.route("/getTranscipt", methods=["POST"])
+def getTranscipt():
+    try:
+        audio_file = request.files['audio']
+        if audio_file and audio_file.filename.endswith(('.mp3', '.wav', '.flac')):
+            audio_path = os.path.join(temp_folder, audio_file.filename)
+            audio_file.save(audio_path)
+            transcript = client.audio.transcriptions.create(
+                model="whisper-1",
+                file=Path(audio_path),
+                response_format="text"
+            )
+            return jsonify({"transcript": transcript})
+
+        else:
+            return jsonify({"error": "Invalid audio file format"}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/hello', methods=['GET']) 
 def helloworld(): 
