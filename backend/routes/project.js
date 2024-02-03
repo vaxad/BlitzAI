@@ -5,7 +5,45 @@ const fetchuser = require('../middleware/fetchuser');
 
 const projectRouter = express.Router()
 
-// Route 1 create project /api/projects
+projectRouter.get(
+	"/",
+	fetchuser,
+	async (req, res) => {
+		try {
+			const allProjects = await Project.find({
+				owner: req.user.id,
+				trashStatus: false
+			})
+
+			return res.status(200).json({
+				projects: allProjects
+			})
+		} catch (err) {
+			return res.status(500).json({error: err.message})
+		}
+	}
+)
+
+projectRouter.get(
+	"/trash",
+	fetchuser,
+	async (req, res) => {
+		try {
+			const allProjects = await Project.find({
+				owner: req.user.id,
+				trashStatus: true
+			})
+
+			return res.status(200).json({
+				projects: allProjects
+			})
+		} catch (err) {
+			return res.status(500).json({error: err.message})
+		}
+	}
+)
+
+// create project /api/projects
 projectRouter.post(
 	"/",
 	fetchuser,
