@@ -25,7 +25,7 @@ function ActiveLink({href, icon, children}) {
 	const Icon = icon
 
 	return (
-		<Link href={"href"}>
+		<Link href={href}>
 			<div
 				className={`flex items-center gap-3 rounded-lg px-3 py-2 text-slate-900 dark:text-white ${path.includes("href") ? " bg-primary hover:bg-orange-600" : "hover:bg-slate-100  dark:hover:bg-slate-700"} `}
 			>
