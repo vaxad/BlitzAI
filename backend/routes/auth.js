@@ -77,7 +77,7 @@ router.post('/login', [
 })
 
 //ROUTE 3: get a user using: GET '/api/auth/getuser'
-router.get('/getuser', fetchuser, async (req, res) => {
+router.get('/me', fetchuser, async (req, res) => {
 	try {
 		const userId = req.user.id;
 		const user = await User.findById(userId).select("-password");
@@ -86,5 +86,14 @@ router.get('/getuser', fetchuser, async (req, res) => {
 		return res.status(500).json({error});
 	}
 })
+
+router.put(
+	"/me",
+	fetchuser,
+	async (req, res) => {
+		const userDoc = await User.findById(req.user.id)
+		
+	}
+)
 
 module.exports = router;
