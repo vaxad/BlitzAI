@@ -11,7 +11,7 @@ projectRouter.post(
 	fetchuser,
 	[
 		body("title", "Title cannot be empty").isString(),
-		body("initPrompt", "Provide a starting prompt").isString()
+		body("prompt", "Provide a starting prompt").isString()
 	],
 	async (req, res) => {
 		const valRes = validationResult(req)
@@ -26,7 +26,12 @@ projectRouter.post(
 		const projectDoc = new Project({
 			owner: userId,
 			title: req.body.title,
-			initPrompt: req.body.initPrompt
+			prompt: req.body.prompt,
+			script: "",
+			thumbnailLink: "",
+			voiceoverLink: "",
+			videoLink: "",
+			trashStatus: false
 		})
 
 		await projectDoc.save()
@@ -41,28 +46,173 @@ projectRouter.get(
 	"/:projectId",
 	fetchuser,
 	async (req, res) => {
-		const {projectId} = req.params
-		if (projectId === undefined) {
-			return res.status(404).json({
-				error: "Not Found"
-			})
-		}
-		const projectDoc = await Project.findOne({
-			_id: {
-				"$eq": projectId
-			},
-			trashStatus: {
-				"$eq": false
+		try {
+			const {projectId} = req.params
+			if (projectId === undefined) {
+				return res.status(404).json({
+					error: "Not Found"
+				})
 			}
-		})
-		if (projectDoc === null) {
-			return res.status(404).json({
-				error: "Not Found"
+			const projectDoc = await Project.findOne({
+				_id: {
+					"$eq": projectId
+				},
+				owner: {
+					"$eq": req.user.id
+				},
+				trashStatus: {
+					"$eq": false
+				}
 			})
+			if (projectDoc === null) {
+				return res.status(404).json({
+					error: "Not Found"
+				})
+			}
+			return res.status(200).json({
+				project: projectDoc
+			})
+		} catch (err) {
+			return res.status(500).json({error: err.message})
 		}
-		return res.status(200).json({
-			project: projectDoc
-		})
+	}
+)
+
+projectRouter.put(
+	"/:projectId",
+	fetchuser,
+	async (req, res) => {
+		try {
+			const {projectId} = req.params
+			if (projectId === undefined) {
+				return res.status(404).json({
+					error: "Not Found"
+				})
+			}
+			await Project.updateOne({
+				_id: {
+					"$eq": projectId
+				},
+				owner: {
+					"$eq": req.user.id
+				},
+				trashStatus: {
+					"$eq": false
+				}
+			}, {
+				...req.body,
+				trashStatus: false,
+				owner: req.user.id
+			})
+
+			const projectDoc = await Project.findOne({
+				_id: {
+					"$eq": projectId
+				},
+				owner: {
+					"$eq": req.user.id
+				},
+				trashStatus: {
+					"$eq": false
+				}
+			})
+
+			if (projectDoc === null) {
+				return res.status(404).json({
+					error: "Not Found"
+				})
+			}
+
+			return res.status(200).json({
+				project: projectDoc
+			})
+		} catch (err) {
+			return res.status(500).json({error: err.message})
+		}
+	}
+)
+
+projectRouter.delete(
+	"/:projectId",
+	fetchuser,
+	async (req, res) => {
+		try {
+			const {projectId} = req.params
+			if (projectId === undefined) {
+				return res.status(404).json({
+					error: "Not Found"
+				})
+			}
+			const projectDoc = await Project.findOne({
+				_id: {
+					"$eq": projectId
+				},
+				owner: {
+					"$eq": req.user.id
+				},
+				trashStatus: {
+					"$eq": false
+				}
+			})
+
+			if (projectDoc === null) {
+				return res.status(404).json({
+					error: "Not Found"
+				})
+			}
+
+			projectDoc.trashStatus = true;
+
+			await projectDoc.save()
+
+			return res.status(200).json({
+				project: projectDoc
+			})
+		} catch (err) {
+			return res.status(500).json({error: err.message})
+		}
+	}
+)
+
+projectRouter.post(
+	"/:projectId/restore",
+	fetchuser,
+	async (req, res) => {
+		try {
+			const {projectId} = req.params
+			if (projectId === undefined) {
+				return res.status(404).json({
+					error: "Not Found"
+				})
+			}
+			const projectDoc = await Project.findOne({
+				_id: {
+					"$eq": projectId
+				},
+				owner: {
+					"$eq": req.user.id
+				},
+				trashStatus: {
+					"$eq": true
+				}
+			})
+
+			if (projectDoc === null) {
+				return res.status(404).json({
+					error: "Not Found"
+				})
+			}
+
+			projectDoc.trashStatus = false;
+
+			await projectDoc.save()
+
+			return res.status(200).json({
+				project: projectDoc
+			})
+		} catch (err) {
+			return res.status(500).json({error: err.message})
+		}
 	}
 )
 
