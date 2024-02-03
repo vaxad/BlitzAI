@@ -12,11 +12,6 @@ import { BiCaptions } from "react-icons/bi";
 import { IoMdImages } from "react-icons/io";
 import { MdDescription } from "react-icons/md";
 import { FaCubes } from "react-icons/fa6";
-import { FaLock } from "react-icons/fa";
-import { BiCaptions } from "react-icons/bi";
-import { IoMdImages } from "react-icons/io";
-import { MdDescription } from "react-icons/md";
-import { FaCubes } from "react-icons/fa6";
 import {
   Accordion,
   AccordionContent,

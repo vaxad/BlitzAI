@@ -93,7 +93,7 @@ export default function Home() {
 			<Card className="w-[350px]">
 				<CardHeader>
 					<CardDescription className=" flex justify-center">
-						<img src='/assets/title-to-hashtags.png' className='h-36'/>
+						<img src='/assets/video-to-description.png' className='h-36'/>
 					</CardDescription>
 					<hr></hr>
 					<CardTitle className="flex text-primary pt-4">Video To Description</CardTitle>
@@ -104,7 +104,7 @@ export default function Home() {
 			<Card className="w-[350px]">
 				<CardHeader>
 					<CardDescription className=" flex justify-center">
-						<img src='/assets/title-to-hashtags.png' className='h-36'/>
+						<img src='/assets/video-to-caption.png' className='h-36'/>
 					</CardDescription>
 					<hr></hr>
 					<CardTitle className="flex text-primary pt-4">Video To Caption</CardTitle>
@@ -116,7 +116,7 @@ export default function Home() {
 			<Card className="w-[350px]">
 				<CardHeader>
 					<CardDescription className=" flex justify-center">
-						<img src='/assets/title-to-hashtags.png' className='h-36'/>
+						<img src='/assets/title-to-thumbmail.png' className='h-36'/>
 					</CardDescription>
 					<hr></hr>
 					<CardTitle className="flex text-primary pt-4 ">Title to Thumbnail</CardTitle>
@@ -127,7 +127,7 @@ export default function Home() {
 			<Card className="w-[350px]">
 				<CardHeader>
 					<CardDescription className=" flex justify-center">
-						<img src='/assets/title-to-hashtags.png' className='h-36'/>
+						<img src='/assets/title-to-voice.png' className='h-36'/>
 					</CardDescription>
 					<hr></hr>
 					<CardTitle className="flex text-primary pt-4">Title to Voice</CardTitle>
@@ -138,7 +138,7 @@ export default function Home() {
 			<Card className="w-[350px]">
 				<CardHeader>
 					<CardDescription className=" flex justify-center">
-						<img src='/assets/title-to-hashtags.png' className='h-36'/>
+						<img src='/assets/title-to-images.png' className='h-36'/>
 					</CardDescription>
 					<hr></hr>
 					<CardTitle className="flex text-primary pt-4">Title to Images</CardTitle>
