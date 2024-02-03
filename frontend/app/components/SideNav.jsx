@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation'
 import React from 'react'
 import { MdDeleteOutline, MdDescription, MdOutlineDescription } from "react-icons/md";
 import store from '@/lib/zustand';
-import { FaCubes, FaHashtag, FaLock } from "react-icons/fa";
+import { FaCubes, FaHashtag, FaLock, FaRegFileAudio } from "react-icons/fa";
 import { useTheme } from "next-themes";
 import { IoMdImages } from "react-icons/io";
 import LogoBlack from "@/public/assets/logo_black.png"
@@ -81,7 +81,12 @@ const SIDE_NAV_LINKS = [
       {
         href: "/script-validation",
         icon: GrValidate ,
-        text: "Script to Validate"
+        text: "Script Validation"
+      },
+      {
+        href: "/FaHashtag-to-hashtags",
+        icon: FaHashtag ,
+        text: "Script to Hashtags"
       },
     ]
   },
@@ -117,6 +122,11 @@ const SIDE_NAV_LINKS = [
         href: "/text-to-image",
         icon: IoMdImages,
         text: "Text to Image"
+      },
+      {
+        href: "/text-to-speech",
+        icon: FaRegFileAudio,
+        text: "Text to Speech"
       },
     ]
   }
