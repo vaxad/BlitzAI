@@ -4,7 +4,7 @@ import React from 'react'
 export default function SideNav() {
   return (
   <aside id="sidebar" className=" -z-10 absolute left-0 -bottom-0 translate-y-full h-screen w-64 transition-transform" aria-label="Sidebar">
-    <div className="flex h-full flex-col overflow-y-auto border-r border-slate-200 bg-white px-3 py-4 dark:border-slate-700 dark:bg-slate-900">
+    <div className="flex h-full flex-col overflow-y-auto border-r border-slate-200 bg-white px-3 py-4 dark:border-slate-700 dark:bg-transparent">
       {/* <div href="#" className="mb-10 flex items-center rounded-lg px-3 py-2 text-slate-900 dark:text-white">
       <img className=' w-8 h-8' src="https://img.icons8.com/ios-filled/50/ffffff/logo.png" alt="logo"/>
         <span className="ml-3 text-base font-semibold">Hackoders</span>
