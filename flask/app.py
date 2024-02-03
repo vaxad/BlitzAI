@@ -285,6 +285,41 @@ def createSummaryFromAudioText():
         return jsonify({"result": response.choices[0].message.content})
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
+
+
+@app.route('/createTitlefromDescription', methods=["POST"])
+def createTitlefromDescription():
+    try:
+        text = request.form['text']
+        no_words = request.form['no_words']
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": f"You are a youtube video title generator from video generator designed to give output as text with {no_words} words"},
+                {"role": "user", "content": text}
+            ]
+        )
+        print(response.choices[0].message.content)
+        return jsonify({"result": response.choices[0].message.content})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
+    
+@app.route('/createDescriptionfromTitle', methods=["POST"])
+def createDescriptionfromTitle():
+    try:
+        text = request.form['text']
+        no_words = request.form['no_words']
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": f"You are a youtube video description generator from video title designed to give output as text with {no_words} words"},
+                {"role": "user", "content": text}
+            ]
+        )
+        print(response.choices[0].message.content)
+        return jsonify({"result": response.choices[0].message.content})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
     
 @app.route('/hello', methods=['GET']) 
 def helloworld(): 
