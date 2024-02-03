@@ -287,6 +287,11 @@ def tts_api():
         voice = request.form['voice']
         tempo = request.form['tempo']
         engine = gTTS(text=text, lang='en', slow=(tempo == "low"))
+        voices = engine.getProperty('voices')
+        if voice=="male":
+            engine.setProperty('voice', voices[0].id)
+        elif voice=="female":
+            engine.setProperty('voice', voices[1].id)
         audio_file_path = os.path.join(output_folder, 'output.mp3')
         engine.save(audio_file_path)
         return send_from_directory(output_folder, 'output.mp3', as_attachment=True)
