@@ -9,7 +9,7 @@ const projectSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	initPrompt: {
+	prompt: {
 		type: String,
 		required: true
 	},
