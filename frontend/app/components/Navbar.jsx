@@ -52,8 +52,8 @@ export default function Navbar() {
 								<IoIosArrowDown className='h-5 w-5'/>
 							</div>
 						</MenubarTrigger>
-						<MenubarContent>
-							<MenubarItem className=" bg-transparent hover:!bg-transparent text-primary">
+						<MenubarContent>	
+							<MenubarItem className=" bg-transparent hover:!bg-transparent text-primary font-bold text-md">
 								Hi, {(auth && user) ? user.name : "User"}
 							</MenubarItem>
 							<MenubarSeparator/>
