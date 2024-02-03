@@ -141,7 +141,8 @@ projectRouter.put(
 			}, {
 				...req.body,
 				trashStatus: false,
-				owner: req.user.id
+				owner: req.user.id,
+				lastUpdatedTimestamp: new Date()
 			})
 
 			const projectDoc = await Project.findOne({
