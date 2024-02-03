@@ -1,10 +1,10 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, {useEffect} from 'react'
 import store from '../../lib/zustand'
-import { usePathname, useRouter } from 'next/navigation';
+import {usePathname, useRouter} from 'next/navigation';
 
 export default function AuthChecker() {
-	const { setUser, user, auth, setAuth, Logout } = store()
+	const {setUser, user, auth, setAuth, Logout} = store()
 	const navigate = useRouter()
 	const location = usePathname()
 	const backend_url = process.env.NEXT_PUBLIC_BACKEND_URL
@@ -19,7 +19,7 @@ export default function AuthChecker() {
 		const data = await res.json()
 		if (data.user) {
 			setUser(data.user)
-		}else{
+		} else {
 			setAuth(false)
 		}
 
