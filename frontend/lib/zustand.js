@@ -11,7 +11,7 @@ const store = create((set) => ({
 	setToast: (item) => set(() => ({toast: item})),
 	user: null,
 	setUser: (item) => set(() => ({user: item})),
-	auth: false,
+	auth: true,
 	setAuth: (item) => set(() => ({auth: item})),
 	Logout: () => set(() => ({user: null, auth: false})),
 	getUser: (token) => set(async () => ({user: await getMe(token)})),

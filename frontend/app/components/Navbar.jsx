@@ -21,57 +21,22 @@ import SideNav from './SideNav'
 import { ModeToggle } from "@/components/ui/theme-toggle"
 import Link from "next/link"
 import store from "@/lib/zustand"
+import logo_white from "../../public/assets/logo_white.png"
+import logo_black from "../../public/assets/logo_black.png"
 
 export default function Navbar() {
   const {auth,Logout} = store()
   return (
     <div className=' fixed top-0 flex flex-row w-full px-4 py-4 gap-8 border-b border-slate-200 dark:border-slate-700 items-center justify-between dark:bg-transparent bg-slate-200 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10  '>
       <SideNav />
-      <Link href="/" className=" flex items-center rounded-lg px-3 py-2 text-slate-900 dark:text-white">
-        <img className=' w-8 h-8' src="https://img.icons8.com/ios-filled/50/ffffff/logo.png" alt="logo" />
-        <span className="ml-3 text-base font-semibold">Kratos</span>
+      <Link href="/" className=" flex items-center rounded-lg px-3 py-1 text-slate-900 dark:text-white">
+        <img className=' w-32 opacity-0' src="/assets/logo_white.png" alt="logo" />
+        
       </Link>
+      
       <div className=" flex flex-row gap-4 justify-center items-center w-fit">
-        {auth?<Menubar>
-          <MenubarMenu>
-            <MenubarTrigger>New</MenubarTrigger>
-            <MenubarContent>
-              <MenubarItem>
-                New Tab 
-              </MenubarItem>
-              <MenubarItem>
-                New Window 
-              </MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger>Profile</MenubarTrigger>
-            {/* <MenubarContent>
-              <MenubarItem>
-                Undo 
-              </MenubarItem>
-              <MenubarItem>
-                Redo
-              </MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem>Cut</MenubarItem>
-              <MenubarItem>Copy</MenubarItem>
-              <MenubarItem>Paste</MenubarItem>
-            </MenubarContent> */}
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger>About</MenubarTrigger>
-            <MenubarContent>
-              <MenubarItem inset><a href="https://github.com/MihirRajeshPanchal" target="_blank">Mihir Panchal</a></MenubarItem>
-              <MenubarItem inset><a href="https://github.com/arnitdo" target="_blank">Arnav Deo</a></MenubarItem>
-              <MenubarItem inset><a href="https://github.com/prinkaldoshi27" target="_blank">Prinkal Doshi</a></MenubarItem>
-              <MenubarItem inset><a href="https://github.com/vaxad" target="_blank">Varad Prabhu</a></MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger>Contact</MenubarTrigger>
-          </MenubarMenu>
-        </Menubar>:
+        {auth?
+      <></>:
     <Menubar >        
       <MenubarMenu>
       <Link className="flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none hover:bg-accent " href={"/auth"}>

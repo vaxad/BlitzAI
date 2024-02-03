@@ -1,23 +1,133 @@
 "use client"
 import Link from 'next/link'
-import {usePathname} from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import React from 'react'
-import {MdDeleteOutline} from "react-icons/md";
-import {LuLayoutDashboard} from "react-icons/lu";
+import { MdOutlineKeyboardVoice } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { LuGalleryThumbnails } from "react-icons/lu";
 import store from '@/lib/zustand';
-import {FaLock} from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
+import { BiCaptions } from "react-icons/bi";
+import { IoMdImages } from "react-icons/io";
+import { MdDescription } from "react-icons/md";
+import { FaCubes } from "react-icons/fa6";
+import { FaLock } from "react-icons/fa";
+import { BiCaptions } from "react-icons/bi";
+import { IoMdImages } from "react-icons/io";
+import { MdDescription } from "react-icons/md";
+import { FaCubes } from "react-icons/fa6";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import { FaHashtag } from "react-icons/fa";
 
 export default function SideNav() {
-	const path = usePathname()
-	const {auth} = store()
-	return (
-		<aside id="sidebar"
-			   className={` -z-10 absolute left-0 -bottom-0 translate-y-full h-screen w-64 transition-transform`}
-			   aria-label="Sidebar">
-			{auth ?
-				<div
-					className="flex h-full flex-col overflow-y-auto border-r border-slate-200 bg-white px-3 py-4 dark:border-slate-700 dark:bg-transparent">
-					<ul className="space-y-2 text-sm font-medium">
+  const path = usePathname()
+  const { auth } = store()
+  return (
+    <aside id="sidebar"
+      className={` -z-10 customnav absolute left-0 top-0 bg-black h-screen w-64 transition-transform`}
+      aria-label="Sidebar">
+      {auth ?
+        <div
+          className="flex h-full flex-col overflow-y-auto border-r border-slate-200 bg-white px-3 py-4 dark:border-slate-700 dark:bg-transparent">
+          <div className='flex flex-col w-full py-2'>
+            <img className=' w-44' src="/assets/logo_white.png" alt="logo" />
+          </div>
+          <Accordion type="single" defaultValue='item-4' collapsible className="w-full">
+            <AccordionItem value="item-4" isActive={true}>
+              <AccordionTrigger className="font-bold text-[2.5vh]">Home</AccordionTrigger>
+              <AccordionContent>
+
+                <Link href="/dashboard">  <div
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-slate-900 dark:text-white ${path.includes("dashboard") ? " bg-primary hover:bg-orange-600" : "hover:bg-slate-100  dark:hover:bg-slate-700"} `}>
+                  <LuLayoutDashboard className='h-5 w-5' />
+                  Dashboard
+                </div> </Link>
+              </AccordionContent>
+              <AccordionContent>
+                <div
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-slate-900 dark:text-white ${path.includes("my-projects") ? " bg-primary hover:bg-orange-600" : "hover:bg-slate-100  dark:hover:bg-slate-700"} `}>
+                  <FaCubes className='h-5 w-5' />
+                  My Projects
+                </div>
+              </AccordionContent>
+              <AccordionContent>
+                <div
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-slate-900 dark:text-white ${path.includes("trash") ? " bg-primary hover:bg-orange-600" : "hover:bg-slate-100  dark:hover:bg-slate-700"} `}>
+                  <MdDeleteOutline className='h-6 w-6' />
+                  Trash
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+          <Accordion type="single" defaultValue='item-1' collapsible className="w-full">
+            <AccordionItem value="item-1" isActive={true}>
+              <AccordionTrigger className="font-bold text-[2.5vh]">Create</AccordionTrigger>
+              <AccordionContent>
+                <div
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-slate-900 dark:text-white ${path.includes("video-to-hashtags") ? " bg-primary hover:bg-orange-600" : "hover:bg-slate-100  dark:hover:bg-slate-700"} `}>
+                  <FaHashtag className='h-5 w-5' />
+                  Video to Hashtags
+                </div>
+              </AccordionContent>
+              <AccordionContent>
+                <div
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-slate-900 dark:text-white ${path.includes("video-to-title-description") ? " bg-primary hover:bg-orange-600" : "hover:bg-slate-100  dark:hover:bg-slate-700"} `}>
+                  <MdDescription className='h-5 w-5' />
+                  Video to Title Description
+                </div>
+              </AccordionContent>
+              <AccordionContent>
+                <div
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-slate-900 dark:text-white ${path.includes("video-to-captions") ? " bg-primary hover:bg-orange-600" : "hover:bg-slate-100  dark:hover:bg-slate-700"} `}>
+                  <BiCaptions className='h-5 w-5' />
+                  Video to Captions
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+          <Accordion type="single" defaultValue='item-2' collapsible className="w-full">
+            <AccordionItem value="item-2" isActive={true}>
+              <AccordionTrigger className="font-bold text-[2.5vh]">Ideate</AccordionTrigger>
+              <AccordionContent>
+                <div
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-slate-900 dark:text-white ${path.includes("title-to-thumbnail") ? " bg-primary hover:bg-orange-600" : "hover:bg-slate-100  dark:hover:bg-slate-700"} `}>
+
+                  <LuGalleryThumbnails className='h-5 w-5' />
+                  Title to Thumbnail
+                </div>
+              </AccordionContent>
+              <AccordionContent>
+                <div
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-slate-900 dark:text-white ${path.includes("title-to-voice") ? " bg-primary hover:bg-orange-600" : "hover:bg-slate-100  dark:hover:bg-slate-700"} `}>
+                  <MdOutlineKeyboardVoice className='h-5 w-5' />
+                  Title to Voice
+                </div>
+              </AccordionContent>
+              <AccordionContent>
+                <div
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-slate-900 dark:text-white ${path.includes("title-to-images") ? " bg-primary hover:bg-orange-600" : "hover:bg-slate-100  dark:hover:bg-slate-700"} `}>
+                  <IoMdImages className='h-5 w-5' />
+                  Title to Images
+                </div>
+              </AccordionContent>
+            </AccordionItem> </Accordion>
+          {/* <Accordion type="single" defaultValue='item-3' collapsible className="w-full">
+      <AccordionItem value="item-3" isActive={true}>
+        <AccordionTrigger>Title to Thumbnail</AccordionTrigger>
+        <AccordionContent>
+          Yes. It&apos;s animated by default, but you can disable it if you
+          prefer.
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion> */}
+
+          {/* <ul className="space-y-2 text-sm font-medium pt-4">
 						<li>
 							<Link href="/dashboard"
 								  className={`flex items-center rounded-lg px-3 py-2 text-slate-900 dark:text-white ${path.includes("dashboard") ? " bg-primary hover:bg-orange-600" : "hover:bg-slate-100  dark:hover:bg-slate-700"} `}>
@@ -43,26 +153,26 @@ export default function SideNav() {
 						<li>
 							<Link href="/trash"
 								  className={`flex items-center rounded-lg px-3 py-2 text-slate-900 dark:text-white ${path.includes("settings") ? " bg-primary hover:bg-orange-600" : "hover:bg-slate-100  dark:hover:bg-slate-700"} `}>
-								<MdDeleteOutline className='h-6 w-6'/>
+								
 
 								<span className="ml-3 flex-1 whitespace-nowrap">Trash</span>
 							</Link>
 						</li>
-					</ul>
-					<div className="mt-auto flex">
-						<div className="flex w-full justify-between">
-						</div>
-					</div>
-				</div> :
-				<div
-					className='flex h-full flex-col gap-8 justify-center items-center overflow-y-auto border-r border-slate-200 bg-white px-3 py-4 dark:border-slate-700 dark:bg-transparent'>
-					<h3 className='text-center'>
-						<FaLock className={"h-8 w-8"}/>
-					</h3>
-					<h3 className=' text-center'>
-						Authenticate to Continue
-					</h3>
-				</div>}
-		</aside>
-	)
+					</ul> */}
+          <div className="mt-auto flex">
+            <div className="flex w-full justify-between">
+            </div>
+          </div>
+        </div> :
+        <div
+          className='flex h-full flex-col gap-8 justify-center items-center overflow-y-auto border-r border-slate-200 bg-white px-3 py-4 dark:border-slate-700 dark:bg-transparent'>
+          <h3 className='text-center'>
+            <FaLock className={"h-8 w-8"} />
+          </h3>
+          <h3 className=' text-center'>
+            Authenticate to Continue
+          </h3>
+        </div>}
+    </aside>
+  )
 }
