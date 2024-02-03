@@ -1,5 +1,7 @@
 "use client"
 import Link from 'next/link'
+import { GrValidate } from "react-icons/gr";
+import { LuGalleryThumbnails } from "react-icons/lu";
 import Image from "next/image"
 import { usePathname } from 'next/navigation'
 import React from 'react'
@@ -7,7 +9,7 @@ import { MdDeleteOutline, MdDescription, MdOutlineDescription } from "react-icon
 import store from '@/lib/zustand';
 import { FaCubes, FaHashtag, FaLock } from "react-icons/fa";
 import { useTheme } from "next-themes";
-
+import { IoMdImages } from "react-icons/io";
 import LogoBlack from "@/public/assets/logo_black.png"
 import LogoWhite from "@/public/assets/logo_white.png"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -16,7 +18,8 @@ import { FaT } from "react-icons/fa6";
 import { BiCaptions } from "react-icons/bi";
 
 const themeMap = {
-  light: "/assets/logo_black.png", dark: "/assets/logo_white.png"
+  light: "/assets/logo_black.png", 
+  dark: "/assets/logo_white.png"
 }
 
 function ActiveLink({ href, icon, children }) {
@@ -27,7 +30,7 @@ function ActiveLink({ href, icon, children }) {
   return (
     <Link href={href}>
       <div
-        className={`flex items-center gap-3 rounded-lg px-3 py-2 text-slate-900 dark:text-white ${path.includes("href") ? " bg-primary hover:bg-orange-600" : "hover:bg-slate-100  dark:hover:bg-slate-700"} `}
+        className={`flex items-center gap-3 rounded-lg px-3 py-2 text-slate-900 dark:text-white ${path.includes(href) ? " bg-primary hover:bg-orange-600" : "hover:bg-slate-100  dark:hover:bg-slate-700"} `}
       >
         <Icon />
         {children}
@@ -72,12 +75,12 @@ const SIDE_NAV_LINKS = [
       },
       {
         href: "/script-to-thumbnail",
-        icon: MdDescription,
+        icon: LuGalleryThumbnails,
         text: "Script to Thumbnail"
       },
       {
         href: "/script-validation",
-        icon: MdDescription,
+        icon: GrValidate ,
         text: "Script to Validate"
       },
     ]
@@ -87,7 +90,7 @@ const SIDE_NAV_LINKS = [
     sectionLinks: [
       {
         href: "/title-to-thumbnail",
-        icon: BiCaptions,
+        icon: LuGalleryThumbnails,
         text: "Title to Thumbnail"
       },
       {
@@ -112,7 +115,7 @@ const SIDE_NAV_LINKS = [
     sectionLinks: [
       {
         href: "/text-to-image",
-        icon: FaHashtag,
+        icon: IoMdImages,
         text: "Text to Image"
       },
     ]
@@ -132,7 +135,7 @@ export default function SideNav() {
     >
 
       <div
-        className="flex h-full flex-col overflow-y-auto border-r border-slate-200 bg-white px-3 py-4 dark:border-slate-700 dark:bg-transparent">
+        className="flex h-full flex-col overflow-y-auto border-r bg-white px-3 py-4 dark:bg-transparent">
         <div className='flex flex-col w-full py-2'>
           <img
             className='w-44'

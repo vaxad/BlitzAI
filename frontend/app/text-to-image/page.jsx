@@ -2,7 +2,7 @@
 import {useState} from "react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
-import {FaArrowLeft} from "react-icons/fa";
+import { IoIosArrowBack } from "react-icons/io";
 import {useRouter} from "next/navigation"
 import { toast } from "sonner";
 import Loader from "../components/Loader";
@@ -70,16 +70,7 @@ export default function NewProject() {
 			<form onSubmit={(e)=>{handleSubmit(e)}} className={"flex-grow w-10/12 p-4"}>
 				<div className={"flex flex-col gap-4"}>
 					<div className={"flex flex-row gap-4 items-center pt-10"}>
-						<Button
-							onClick={(e) => {
-								e.preventDefault()
-								navRouter.push("/dashboard")
-							}}
-						>
-									<span className={"flex flex-row gap-4 items-center"}>
-										<FaArrowLeft/> Back
-									</span>
-						</Button>
+						
 						<span className={"text-3xl font-bold"}>
 									{`Convert your Prompt to Image`}
 								</span>

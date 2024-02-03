@@ -59,9 +59,8 @@ export default function Home() {
 						</SelectGroup>
 					</SelectContent>
 				</Select>
-				<Button>Add New</Button>
-				<Tabs defaultValue="grid" className="w-fit">
-					<TabsList className="grid w-24 grid-cols-2">
+				<Tabs defaultValue="grid" className="w-fit " >
+					<TabsList className="grid w-24 grid-cols-2 bg-primary">
 						<TabsTrigger value="grid" onClick={() => {
 							setTab("grid")
 						}}> <CiGrid42/></TabsTrigger>
@@ -83,7 +82,7 @@ export default function Home() {
 						<img src='/assets/title-to-hashtags.png' className='h-36'/>
 					</CardDescription>
 					<hr></hr>
-					<CardTitle className="flex text-primary pt-4 ">Video To Hashtag</CardTitle>
+					<CardTitle className="flex text-primary pt-4 font-extrabold">Video To Hashtag</CardTitle>
 				<CardDescription className="flex ">Create search friendly hashtags from the video.</CardDescription>
 				</CardHeader>
 			</Card>
@@ -94,7 +93,7 @@ export default function Home() {
 						<img src='/assets/video-to-description.png' className='h-36'/>
 					</CardDescription>
 					<hr></hr>
-					<CardTitle className="flex text-primary pt-4">Video To Description</CardTitle>
+					<CardTitle className="flex text-primary pt-4 font-extrabold">Video To Description</CardTitle>
 				<CardDescription className="flex ">Create search friendly description from the video.</CardDescription>
 				</CardHeader>
 			</Card>
@@ -105,7 +104,7 @@ export default function Home() {
 						<img src='/assets/video-to-caption.png' className='h-36'/>
 					</CardDescription>
 					<hr></hr>
-					<CardTitle className="flex text-primary pt-4">Video To Caption</CardTitle>
+					<CardTitle className="flex text-primary pt-4  font-extrabold">Video To Caption</CardTitle>
 				<CardDescription className="flex ">Create search friendly captions from the video.</CardDescription>
 				</CardHeader>
 			</Card>
@@ -117,7 +116,7 @@ export default function Home() {
 						<img src='/assets/title-to-thumbmail.png' className='h-36'/>
 					</CardDescription>
 					<hr></hr>
-					<CardTitle className="flex text-primary pt-4 ">Title To Thumbnail</CardTitle>
+					<CardTitle className="flex text-primary pt-4  font-extrabold ">Title To Thumbnail</CardTitle>
 				<CardDescription className="flex ">Create intuitive thumbnails from the video titles.</CardDescription>
 				</CardHeader>
 			</Card>
@@ -128,7 +127,7 @@ export default function Home() {
 						<img src='/assets/title-to-voice.png' className='h-36'/>
 					</CardDescription>
 					<hr></hr>
-					<CardTitle className="flex text-primary pt-4">Text To Voice</CardTitle>
+					<CardTitle className="flex text-primary pt-4  font-extrabold">Text To Voice</CardTitle>
 				<CardDescription className="flex ">Create voice for videos from the video scripts.</CardDescription>
 				</CardHeader>
 			</Card>
@@ -139,7 +138,7 @@ export default function Home() {
 						<img src='/assets/title-to-images.png' className='h-36'/>
 					</CardDescription>
 					<hr></hr>
-					<CardTitle className="flex text-primary pt-4">Description To Video</CardTitle>
+					<CardTitle className="flex text-primary pt-4  font-extrabold">Description To Video</CardTitle>
 				<CardDescription className="flex ">Create videos from video description.</CardDescription>
 				</CardHeader>
 			</Card>
@@ -153,7 +152,7 @@ export default function Home() {
 					<FaHashtag className='h-8 w-8 text-white items-center' />
 						<div className='flex flex-col'>
 
-					<CardTitle className="flex text-primary pt-2 px-4">Video To Hashtag</CardTitle>
+					<CardTitle className="flex text-primary pt-2  font-extrabold px-4">Video To Hashtag</CardTitle>
 				<CardDescription className="flex px-4">Create Search Friendly Hashtags from the Video.</CardDescription>
 						</div>
 						</div>
@@ -167,7 +166,7 @@ export default function Home() {
 					<MdDescription className='h-8 w-8 text-white items-center' />
 						<div className='flex flex-col'>
 
-					<CardTitle className="flex text-primary pt-4 px-4">Video To Description</CardTitle>
+					<CardTitle className="flex text-primary pt-4  font-extrabold px-4">Video To Description</CardTitle>
 				<CardDescription className="flex px-4">Create Search Friendly Description from the Video.</CardDescription>
 						</div>
 						</div>
@@ -180,7 +179,7 @@ export default function Home() {
 					<BiCaptions className='h-8 w-8 text-white items-center' />
 						<div className='flex flex-col'>
 
-					<CardTitle className="flex text-primary pt-4 px-4">Video To Caption</CardTitle>
+					<CardTitle className="flex text-primary pt-4  font-extrabold px-4">Video To Caption</CardTitle>
 				<CardDescription className="flex px-4">Create Search Friendly Capt from the Video.</CardDescription>
 						</div>
 						</div>
@@ -193,7 +192,7 @@ export default function Home() {
 					<LuGalleryThumbnails className='h-8 w-8 text-white items-center' />
 						<div className='flex flex-col'>
 
-					<CardTitle className="flex text-primary pt-2 px-4">Title To Thumbnail</CardTitle>
+					<CardTitle className="flex text-primary pt-2 px-4  font-extrabold">Title To Thumbnail</CardTitle>
 				<CardDescription className="flex px-4">Create Search Friendly Hashtags from the Video.</CardDescription>
 						</div>
 						</div>
@@ -207,7 +206,7 @@ export default function Home() {
 					<MdOutlineKeyboardVoice className='h-8 w-8 text-white items-center' />
 						<div className='flex flex-col'>
 
-					<CardTitle className="flex text-primary pt-4 px-4">Title To Voice</CardTitle>
+					<CardTitle className="flex text-primary pt-4  font-extrabold px-4">Title To Voice</CardTitle>
 				<CardDescription className="flex px-4">Create Search Friendly Description from the Video.</CardDescription>
 						</div>
 						</div>
@@ -220,7 +219,7 @@ export default function Home() {
 					<IoMdImages className='h-8 w-8 text-white items-center' />
 						<div className='flex flex-col'>
 
-					<CardTitle className="flex text-primary pt-4 px-4">Time To Images</CardTitle>
+					<CardTitle className="flex text-primary pt-4  font-extrabold px-4">Time To Images</CardTitle>
 				<CardDescription className="flex px-4">Create Search Friendly Capt from the Video.</CardDescription>
 						</div>
 						</div>

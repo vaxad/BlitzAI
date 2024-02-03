@@ -58,16 +58,7 @@ export default function NewProject() {
 			<form onSubmit={(e) => { handleSubmit(e) }} className={"flex-grow w-10/12 p-4"}>
 				<div className={"flex flex-col gap-4"}>
 					<div className={"flex flex-row gap-4 items-center pt-10"}>
-						<Button
-							onClick={(e) => {
-								e.preventDefault()
-								navRouter.push("/dashboard")
-							}}
-						>
-							<span className={"flex flex-row gap-4 items-center"}>
-								<FaArrowLeft /> Back
-							</span>
-						</Button>
+						
 						<span className={"text-3xl font-bold"}>
 							{`Generate video description from your script`}
 						</span>
@@ -88,10 +79,10 @@ export default function NewProject() {
 									<SelectValue className=" w-fit" placeholder="Number of words" />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value={"100"}>100</SelectItem>
-									<SelectItem value={"200"}>200</SelectItem>
-									<SelectItem value={"300"}>300</SelectItem>
-									<SelectItem value={"400"}>400</SelectItem>
+									<SelectItem value={"100"}>100 words</SelectItem>
+									<SelectItem value={"200"}>200 words</SelectItem>
+									<SelectItem value={"300"}>300 words</SelectItem>
+									<SelectItem value={"400"}>400 words</SelectItem>
 								</SelectContent>
 							</Select>
 						</div>

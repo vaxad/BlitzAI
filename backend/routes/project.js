@@ -17,7 +17,7 @@ projectRouter.get(
 			const allProjects = await Project.find({
 				owner: req.user.id,
 				trashStatus: false
-			}, {}, sortBy === "name" ? {name: 1} : {lastUpdatedTimestamp: -1})
+			}).sort(sortBy === "name" ? {name: 1} : {lastUpdatedTimestamp: -1})
 
 			return res.status(200).json({
 				projects: allProjects
@@ -38,7 +38,7 @@ projectRouter.get(
 			const allProjects = await Project.find({
 				owner: req.user.id,
 				trashStatus: true
-			}, {}, sortBy === "name" ? {name: 1} : {lastUpdatedTimestamp: -1})
+			}).sort(sortBy === "name" ? {name: 1} : {lastUpdatedTimestamp: -1})
 
 			return res.status(200).json({
 				projects: allProjects

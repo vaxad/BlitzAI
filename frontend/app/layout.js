@@ -8,8 +8,8 @@ import AuthChecker from "./components/AuthChecker";
 const inter = Inter({subsets: ["latin"]});
 
 export const metadata = {
-	title: "Hackoders",
-	description: "Hackoders is a community of developers and designers who are passionate about creating the best software and websites.",
+	title: "Blitz AI",
+	description: "Automate your content creation.",
 };
 
 export default function RootLayout({children}) {
