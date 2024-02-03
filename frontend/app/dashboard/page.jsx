@@ -28,7 +28,7 @@ export default function home() {
 
 			<div className='flex py-6 flex-row gap-5'>
 
-				<Input type="text" placeholder="Search" className="w-[100vh]"/>
+				<Input type="text" placeholder="Search" className="w-full"/>
 				<Select>
 					<SelectTrigger className="w-[180px]">
 						<SelectValue placeholder="Sort By"/>
@@ -43,7 +43,7 @@ export default function home() {
 				</Select>
 				<Button>Add New</Button>
 				<Tabs defaultValue="grid" className="w-fit">
-					<TabsList className="grid w-fit grid-cols-2">
+					<TabsList className="grid w-24 grid-cols-2">
 						<TabsTrigger value="grid" onClick={() => {
 							setTab("grid")
 						}}> <CiGrid42/></TabsTrigger>
@@ -55,7 +55,7 @@ export default function home() {
 			</div>
 			<Tabs>
 				{tab === "grid" ?
-					<div className='flex flex-row gap-10 py-4 w-screen'>
+					<div className='flex flex-row gap-10 py-4 w-full'>
 						<Card>
 							<CardHeader>
 								<CardTitle>

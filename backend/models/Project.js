@@ -1,28 +1,28 @@
 const mongoose = require('mongoose')
 
 const projectSchema = new mongoose.Schema({
+	type: {
+		type: String,
+		required: true
+	},
+	name: {
+		type: String,
+		required: true
+	},
 	owner: {
 		type: mongoose.Schema.Types.ObjectId,
 		required: true
 	},
-	title: {
-		type: String,
-		required: true
-	},
-	prompt: {
-		type: String,
-		required: true
-	},
-	script: {
-		type: String,
-	},
-	thumbnailLink: {
+	inputScript: {
 		type: String
 	},
-	voiceoverLink: {
+	inputVideoURL: {
 		type: String
 	},
-	videoLink: {
+	outputType: {
+		type: String
+	},
+	output: {
 		type: String
 	},
 	trashStatus: {
