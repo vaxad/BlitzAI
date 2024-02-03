@@ -43,7 +43,7 @@ export default function VideoToHashtags() {
 					setProjectName(name)
 					setProjectId(_id)
 					setVideoURL(input || "")
-					setProjectOutput(output)
+					setProjectOutput(output || "")
 				}
 			})
 		}
@@ -156,17 +156,17 @@ export default function VideoToHashtags() {
 						onProjectCreate={onProjectCreate}
 					/>
 				) : (
-					<div className={"flex flex-grow h-[90vh] flex-col justify-center gap-4 items-center"}>
+					<div className={"flex flex-grow h-[90vh] flex-col justify-center gap-8 p-4 items-center"}>
 						<form
 							onSubmit={(e) => {
 								e.preventDefault()
 								generateVideoHashtags()
 							}}
-							className={"p-8 w-full flex flex-col flex-grow gap-4"}
+							className={"p-8 w-full flex flex-col flex-grow gap-8"}
 						>
 							<h3 className={"font-bold text-3xl"}>{projectName}</h3>
 							<hr/>
-							<div className={"flex flex-col flex-grow gap-2"}>
+							<div className={"flex flex-col flex-grow gap-4"}>
 								<label htmlFor={"video-picker"}>
 									Select Video<span className={"text-red-400"}>*</span>
 								</label>
