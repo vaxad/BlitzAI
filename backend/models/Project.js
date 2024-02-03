@@ -13,10 +13,10 @@ const projectSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		required: true
 	},
-	inputScript: {
+	inputType: {
 		type: String
 	},
-	inputVideoURL: {
+	input: {
 		type: String
 	},
 	outputType: {

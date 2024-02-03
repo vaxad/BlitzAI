@@ -2,8 +2,10 @@ const express = require('express');
 const Project = require('../models/Project');
 const {body, validationResult} = require('express-validator');
 const fetchuser = require('../middleware/fetchuser');
+const constants = require("../util/constants")
 
 const projectRouter = express.Router()
+
 
 projectRouter.get(
 	"/",
@@ -48,7 +50,8 @@ projectRouter.post(
 	"/",
 	fetchuser,
 	[
-		body("name", "Title cannot be empty").isString()
+		body("name", "Title cannot be empty").isString(),
+		body("type").isIn(constants.VALID_PROJECT_TYPES)
 	],
 	async (req, res) => {
 		const valRes = validationResult(req)
