@@ -83,7 +83,7 @@ export default function Home() {
 					</CardDescription>
 					<hr></hr>
 					<CardTitle className="flex text-primary pt-4 ">Video To Hashtag</CardTitle>
-				<CardDescription className="flex ">Create Search Friendly Hashtags from the Video.</CardDescription>
+				<CardDescription className="flex ">Create search friendly hashtags from the video.</CardDescription>
 				</CardHeader>
 			</Card>
 
@@ -94,7 +94,7 @@ export default function Home() {
 					</CardDescription>
 					<hr></hr>
 					<CardTitle className="flex text-primary pt-4">Video To Description</CardTitle>
-				<CardDescription className="flex ">Create Search Friendly Description from the Video.</CardDescription>
+				<CardDescription className="flex ">Create search friendly description from the video.</CardDescription>
 				</CardHeader>
 			</Card>
 
@@ -105,7 +105,7 @@ export default function Home() {
 					</CardDescription>
 					<hr></hr>
 					<CardTitle className="flex text-primary pt-4">Video To Caption</CardTitle>
-				<CardDescription className="flex ">Create Search Friendly Capt from the Video.</CardDescription>
+				<CardDescription className="flex ">Create search friendly captions from the video.</CardDescription>
 				</CardHeader>
 			</Card>
 			</div>
@@ -116,8 +116,8 @@ export default function Home() {
 						<img src='/assets/title-to-thumbmail.png' className='h-36'/>
 					</CardDescription>
 					<hr></hr>
-					<CardTitle className="flex text-primary pt-4 ">Title to Thumbnail</CardTitle>
-				<CardDescription className="flex ">Create Search Friendly Hashtags from the Video.</CardDescription>
+					<CardTitle className="flex text-primary pt-4 ">Title To Thumbnail</CardTitle>
+				<CardDescription className="flex ">Create intuitive thumbnails from the video titles.</CardDescription>
 				</CardHeader>
 			</Card>
 
@@ -127,8 +127,8 @@ export default function Home() {
 						<img src='/assets/title-to-voice.png' className='h-36'/>
 					</CardDescription>
 					<hr></hr>
-					<CardTitle className="flex text-primary pt-4">Title to Voice</CardTitle>
-				<CardDescription className="flex ">Create Search Friendly Description from the Video.</CardDescription>
+					<CardTitle className="flex text-primary pt-4">Text To Voice</CardTitle>
+				<CardDescription className="flex ">Create voice for videos from the video scripts.</CardDescription>
 				</CardHeader>
 			</Card>
 
@@ -138,8 +138,8 @@ export default function Home() {
 						<img src='/assets/title-to-images.png' className='h-36'/>
 					</CardDescription>
 					<hr></hr>
-					<CardTitle className="flex text-primary pt-4">Title to Images</CardTitle>
-				<CardDescription className="flex ">Create Search Friendly Capt from the Video.</CardDescription>
+					<CardTitle className="flex text-primary pt-4">Description To Video</CardTitle>
+				<CardDescription className="flex ">Create videos from video description.</CardDescription>
 				</CardHeader>
 			</Card>
 			</div>
