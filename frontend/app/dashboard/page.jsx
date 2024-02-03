@@ -12,12 +12,9 @@ import {
 import { CiBoxList } from "react-icons/ci";
 import { CiGrid42 } from "react-icons/ci";
 import { FaHashtag } from "react-icons/fa";
-import { LuLayoutDashboard } from "react-icons/lu";
 import { LuGalleryThumbnails } from "react-icons/lu";
-import { FaLock } from "react-icons/fa";
 import { BiCaptions } from "react-icons/bi";
 import { MdDescription } from "react-icons/md";
-import { FaCubes } from "react-icons/fa6";
 import { MdOutlineKeyboardVoice } from "react-icons/md";
 import {
 	Tabs,
@@ -75,7 +72,7 @@ export default function Home() {
 			</div>
 			<Tabs>
 				{tab === "grid" ?
-					<div className='flex flex-row gap-10 py-4 w-screen'>
+					<div className='flex flex-row gap-10 py-4 w-full'>
 		<div>
 							
 		<div className='flex flex-row gap-4 '>

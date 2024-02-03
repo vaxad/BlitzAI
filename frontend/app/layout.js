@@ -16,7 +16,7 @@ export default function RootLayout({children}) {
 	return (
 		<html lang="en">
 		<body id="style-2" className={inter.className}>
-		{/* <AuthChecker/> */}
+		<AuthChecker/>
 		<ThemeProvider
 			attribute="class"
 			defaultTheme="system"

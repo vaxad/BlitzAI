@@ -25,8 +25,10 @@ export default function AuthChecker() {
 
 	}
 	useEffect(() => {
-		console.log(localStorage.getItem("auth-token"))
-		if (localStorage.getItem("auth-token")) {
+		const t=localStorage.getItem("auth-token")
+		console.log(t)
+		if (t) {
+			console.log("hii")
 			if(location.includes("auth")){
 				navigate.push("/dashboard")
 			}
@@ -34,13 +36,11 @@ export default function AuthChecker() {
 			if (token)
 				getMe(token)
 			else{
-				localStorage.setItem("auth-token",null)
+				localStorage.removeItem("auth-token")
 				Logout()
 			}
 		} else {
-			if(localStorage.getItem('auth-token')){
-				setAuth(true)
-			}else if (!location.includes("auth") && location !== "/") {
+			if (!location.includes("auth") && location !== "/") {
 				navigate.push("/auth")
 			}
 		}
