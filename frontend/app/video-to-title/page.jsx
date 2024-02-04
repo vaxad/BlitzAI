@@ -8,6 +8,7 @@ import {getProjectById, getReadonlyURL, manageMedia, updateProject} from "@/lib/
 import {toast} from "sonner"
 import store from "@/lib/zustand";
 import {Button} from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 export default function VideoToHashtags() {
 	const [projectId, setProjectId] = useState("")
@@ -82,7 +83,7 @@ export default function VideoToHashtags() {
 
 					if (transcriptTitle.ok) {
 						const {result} = await transcriptTitle.json()
-
+						console.log(result)
 						setProjectOutput(result)
 						await updateProject({
 							id: projectId,
@@ -156,13 +157,13 @@ export default function VideoToHashtags() {
 						onProjectCreate={onProjectCreate}
 					/>
 				) : (
-					<div className={"flex flex-grow h-[90vh] flex-col justify-center gap-8 p-4 items-center"}>
+					<div className={"flex flex-grow min-h-[90vh] flex-col justify-start gap-4 p-4 items-center"}>
 						<form
 							onSubmit={(e) => {
 								e.preventDefault()
 								generateVideoHashtags()
 							}}
-							className={"p-8 w-full flex flex-col flex-grow gap-8"}
+							className={"p-4 w-full flex flex-col flex-grow gap-8"}
 						>
 							<h3 className={"font-bold text-3xl"}>{projectName}</h3>
 							<hr/>
@@ -189,6 +190,19 @@ export default function VideoToHashtags() {
 								<Button type={"submit"}>Generate Title</Button>
 							</div>
 						</form>
+						{projectOutput!==""?
+						<div className={"flex flex-col gap-4 items-center justify-center w-full p-4 flex-grow"}>
+							<Label className="w-full">Generated Title</Label>
+						<Input
+								value={projectOutput} onChange={(e) => setProjectOutput(e.target.value)}
+								placeholder={"Your Title"}
+							/>
+						<div className=" flex flex-row justify-between w-full items-center">
+							<Button onClick={() => { setProjectOutput("") }} variant="secondary" className=" w-fit">Discard</Button>
+							{/* <a className="h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90" href={img} download="Varad's Resume">Download</a> */}
+							<Button onClick={() => { navigator.clipboard.writeText(projectOutput);toast("Title copied successfully!") }}>Copy</Button>
+						</div>
+					</div>:<></>}
 					</div>
 				)
 			}

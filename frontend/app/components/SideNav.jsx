@@ -4,7 +4,7 @@ import {GrValidate} from "react-icons/gr";
 import {LuGalleryThumbnails, LuLayoutDashboard} from "react-icons/lu";
 import {usePathname} from 'next/navigation'
 import React from 'react'
-import {MdDeleteOutline, MdDescription, MdOutlineDescription, MdTitle} from "react-icons/md";
+import {MdDeleteOutline, MdDescription, MdOutlineDescription, MdTitle, MdVideoFile} from "react-icons/md";
 import store from '@/lib/zustand';
 import {FaCubes, FaHashtag, FaLock, FaRegFileAudio} from "react-icons/fa";
 import {useTheme} from "next-themes";
@@ -133,15 +133,25 @@ const SIDE_NAV_LINKS = [
 				icon: FaRegFileAudio,
 				text: "Text to Speech"
 			},
+			{
+				href: "/text-to-video",
+				icon: MdVideoFile,
+				text: "Text to Video"
+			},
 		]
 	},
   {
-		sectionName: "Thumbnail",
+		sectionName: "Image",
 		sectionLinks: [
 			{
 				href: "/thumbnail-edit",
 				icon: IoMdImages,
 				text: "Edit Thumbnail"
+			},
+      {
+				href: "/animate-image",
+				icon: MdVideoFile,
+				text: "Animate Image"
 			}
 		]
 	}
