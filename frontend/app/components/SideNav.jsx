@@ -189,7 +189,7 @@ export default function SideNav() {
 				<div className='flex flex-col w-full py-2'>
 					<img
 						className='w-44'
-						src={themeMap[theme === "system" ? systemTheme : theme]}
+						src={'/assets/logo_white.png'}
 						alt="logo"
 					/>
 				</div>

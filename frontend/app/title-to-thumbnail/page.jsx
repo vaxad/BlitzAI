@@ -22,8 +22,6 @@ export default function NewProject() {
 			toast("Enter a valid title")
 			return
 		}
-
-		const {demoEnv, demoDelayMs} = store()
 		if (demoEnv) {
 			setTimeout(() => {
 				setLoading(false)

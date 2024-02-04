@@ -212,7 +212,7 @@ export default function Home() {
 											<Link href={dashObj.href} key={dashObj.href}>
 												<CardHeader>
 													<CardDescription className=" flex justify-center">
-														<img src={`/assets/dashsrc/${(dashIdx + 1) % 7}.png`}
+														<img src={`/assets/dashsrc/${(dashIdx + 1) % 6}.png`}
 															 className='h-36'/>
 													</CardDescription>
 													<hr></hr>

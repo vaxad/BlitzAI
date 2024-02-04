@@ -5,6 +5,7 @@ import {useRouter} from "next/navigation"
 import {toast} from "sonner";
 import Loader from "../components/Loader";
 import {Textarea} from "@/components/ui/textarea";
+import store from "@/lib/zustand";
 
 export default function NewProject() {
 	const [projectTitle, setProjectTitle] = useState("")
