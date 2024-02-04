@@ -79,7 +79,7 @@ const SIDE_NAV_LINKS = [
 				text: "Script Validation"
 			},
 			{
-				href: "/FaHashtag-to-hashtags",
+				href: "/script-to-hashtags",
 				icon: FaHashtag,
 				text: "Script to Hashtags"
 			},

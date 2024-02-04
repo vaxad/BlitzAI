@@ -15,7 +15,62 @@ import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import Link from "next/link"
 import {Button} from "@/components/ui/button";
 
+const PROJECT_TYPE_MAPPING = [
+	{
+		type: "script-to-title",
+		text: "Script to Title",
+	},
+	{
+		type: "script-to-description",
+		text: "Script to Description",
+	},
+	{
+		type: "script-to-thumbnail",
+		text: "Script to Thumbnail",
+	},
+	{
+		type: "script-validation",
+		text: "Script Validation",
+	},
+	{
+		type: "FaHashtag-to-hashtags",
+		text: "Script to Hashtags",
+	},
+	{
+		type: "title-to-thumbnail",
+		text: "Title to Thumbnail",
+	},
+	{
+		type: "title-to-description",
+		text: "Title to Description",
+	},
+	{
+		type: "video-to-hashtags",
+		text: "Video to Hashtags",
+	},
+	{
+		type: "video-to-description",
+		text: "Video to Description",
+	},
+	{
+		type: "video-to-title",
+		text: "Video to Title",
+	},
+	{
+		type: "text-to-image",
+		text: "Text to Image",
+	},
+	{
+		type: "text-to-speech",
+		text: "Text to Speech",
+	}
+]
+
 function ProjectCard(data) {
+	const projectTypeName = PROJECT_TYPE_MAPPING.find((typeObj) => {
+		return typeObj.type === data.type
+	})
+
 	return (
 		<Link href={`/${data.type}?projectId=${data._id}`}>
 			<Card className={"hover:scale-105 transition-all"}>
@@ -26,7 +81,13 @@ function ProjectCard(data) {
 					<hr/>
 				</CardHeader>
 				<CardContent className={"flex flex-col justify-between gap-4 items-center"}>
-					Last updated on {new Date(data.lastUpdatedTimestamp).toLocaleDateString()}
+					{projectTypeName ? (
+						<span className={"text-bold text-primary"}>
+							{projectTypeName.text}
+						</span>
+					) : (null)}
+					<span
+						className={"text-slate-500 text-sm"}>Updated {new Date(data.lastUpdatedTimestamp).toLocaleDateString()}</span>
 					<Button variant={"secondary"} className={"flex-grow w-full"}>
 						Visit Project
 					</Button>
@@ -41,6 +102,8 @@ export default function Home() {
 	const [userProjects, setUserProjects] = useState([])
 
 	const [sortBy, setSortBy] = useState("name")
+
+	const [searchTerm, setSearchTerm] = useState("")
 
 	useEffect(() => {
 		if (!auth) return
@@ -80,7 +143,8 @@ export default function Home() {
 		<div className='flex flex-col gap-4'>
 			<div className='flex flex-col py-10 px-10 min-h-[200vh] gap-4'>
 				<div className='flex  flex-row gap-5'>
-					<Input type="text" placeholder="Search" className="w-full"/>
+					<Input type="text" placeholder="Search" value={searchTerm}
+						   onChange={(e) => setSearchTerm(e.target.value)} className="w-full"/>
 					<Select value={sortBy} onValueChange={(e) => setSortBy(e)}>
 						<SelectTrigger className="w-[180px]">
 							<SelectValue placeholder="Sort By"/>
@@ -96,7 +160,9 @@ export default function Home() {
 				</div>
 				<div className={"grid grid-cols-3 gap-4"}>
 					{
-						userProjects.sort(sortAlgs[sortBy]).map((userProj, projIndex) => {
+						userProjects.filter((projObj) => {
+							return searchTerm === "" || projObj.name.includes(searchTerm)
+						}).sort(sortAlgs[sortBy]).map((userProj, projIndex) => {
 							return (
 								<ProjectCard {...userProj} key={userProj._id}/>
 							)
