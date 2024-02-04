@@ -18,11 +18,11 @@ export default function VideoToDescriptions() {
 	const [inputFile, setInputFile] = useState(null)
 	const [videoURL, setVideoURL] = useState("")
 	const [projectOutput, setProjectOutput] = useState("")
-
+	const [isLoading, setIsLoading] = useState(false)
 
 	const navigate = useRouter()
 
-	const {auth, user} = store()
+	const {auth, user, demoEnv, demoDelayMs} = store()
 
 	const searchParams = useSearchParams()
 
@@ -52,7 +52,17 @@ export default function VideoToDescriptions() {
 	}, [navigate, searchParams]);
 
 
-	const generateVideoHashtags = async () => {
+	const generateVideoDescription = async () => {
+		setIsLoading(true)
+
+		if (demoEnv) {
+			setTimeout(() => {
+				setIsLoading(false)
+				setProjectOutput("Hold up, is this monitor cheating? This monitor is telling you when there's an enemy just off of screen. How? Well, it's using AI to take a look at your mini-map and putting a marker on the edge of your screen where that person's located. So technically, it's not taking any information that isn't already available for you on screen. The AI chip is going to allow us to process information that's on our screen and make cool little macros like this. The LED bar at the bottom can even represent your health meter. What do you think? Is it cheating?")
+			}, demoDelayMs)
+			return
+		}
+
 		if (inputFile) {
 			const formData = new FormData()
 			formData.append("audio", inputFile)
@@ -70,6 +80,7 @@ export default function VideoToDescriptions() {
 				const output = await res.json()
 				const result = output.transcript
 
+				setIsLoading(false)
 				setProjectOutput(result)
 				await updateProject({
 					id: projectId,
@@ -148,7 +159,7 @@ export default function VideoToDescriptions() {
 						<form
 							onSubmit={(e) => {
 								e.preventDefault()
-								generateVideoHashtags()
+								generateVideoDescription()
 							}}
 							className={"p-8 w-full flex flex-col flex-grow gap-8"}
 						>

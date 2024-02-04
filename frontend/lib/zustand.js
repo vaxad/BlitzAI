@@ -15,6 +15,8 @@ const store = create((set) => ({
 	setAuth: (item) => set(() => ({auth: item})),
 	Logout: () => set(() => ({user: null, auth: false})),
 	getUser: (token) => set(async () => ({user: await getMe(token)})),
+	demoEnv: true,
+	demoDelayMs: 2000
 }));
 
 const getMe = async (token) => {
