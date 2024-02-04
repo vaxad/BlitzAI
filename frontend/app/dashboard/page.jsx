@@ -10,11 +10,85 @@ import {
 	SelectValue,
 } from "@/components/ui/select"
 import {CiBoxList, CiGrid42} from "react-icons/ci";
-import {FaHashtag} from "react-icons/fa";
+import {FaHashtag, FaRegFileAudio} from "react-icons/fa";
 import {Tabs, TabsList, TabsTrigger,} from "@/components/ui/tabs"
 import {Card, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card"
 import {Input} from "@/components/ui/input"
 import Link from "next/link"
+import {LuGalleryThumbnails} from "react-icons/lu";
+import {MdDescription, MdOutlineDescription, MdTitle} from "react-icons/md";
+import {FaT} from "react-icons/fa6";
+import {GrValidate} from "react-icons/gr";
+import {IoMdImages} from "react-icons/io";
+
+const DASH_ICONS = [
+	{
+		href: "/script-to-title",
+		icon: FaT,
+		text: "Script to Title"
+	},
+	{
+		href: "/script-to-description",
+		icon: MdDescription,
+		text: "Script to Description"
+	},
+	{
+		href: "/script-to-thumbnail",
+		icon: LuGalleryThumbnails,
+		text: "Script to Thumbnail"
+	},
+	{
+		href: "/script-validation",
+		icon: GrValidate,
+		text: "Script Validation"
+	},
+	{
+		href: "/script-to-hashtags",
+		icon: FaHashtag,
+		text: "Script to Hashtags"
+	},
+	{
+		href: "/title-to-thumbnail",
+		icon: LuGalleryThumbnails,
+		text: "Title to Thumbnail"
+	},
+	{
+		href: "/title-to-description",
+		icon: MdOutlineDescription,
+		text: "Title to Description"
+	},
+	{
+		href: "/video-to-hashtags",
+		icon: FaHashtag,
+		text: "Video to Hashtags"
+	},
+	{
+		href: "/video-to-description",
+		icon: MdDescription,
+		text: "Video to Description"
+	},
+	{
+		href: "/video-to-title",
+		icon: MdTitle,
+		text: "Video to Title"
+	},
+	{
+		href: "/text-to-image",
+		icon: IoMdImages,
+		text: "Text to Image"
+	},
+	{
+		href: "/text-to-speech",
+		icon: FaRegFileAudio,
+		text: "Text to Speech"
+	},
+	{
+		href: "/thumbnail-edit",
+		icon: IoMdImages,
+		text: "Edit Thumbnail"
+	}
+]
+
 
 const DASH_LINKS = [
 	{
