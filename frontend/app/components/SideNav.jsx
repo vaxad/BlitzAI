@@ -134,6 +134,16 @@ const SIDE_NAV_LINKS = [
 				text: "Text to Speech"
 			},
 		]
+	},
+  {
+		sectionName: "Thumbnail",
+		sectionLinks: [
+			{
+				href: "/thumbnail-edit",
+				icon: IoMdImages,
+				text: "Edit Thumbnail"
+			}
+		]
 	}
 ]
 
