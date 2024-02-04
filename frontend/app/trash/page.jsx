@@ -127,7 +127,7 @@ export default function Home() {
 
 	const fetchProjects = async () => {
 		const fetchResp = await fetch(
-			`${process.env.NEXT_PUBLIC_BACKEND_URL}/trash`,
+			`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects/trash`,
 			{
 				headers: {
 					"auth-token": window.localStorage.getItem("auth-token") || ""
