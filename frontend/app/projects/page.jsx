@@ -72,13 +72,29 @@ function ProjectCard(data) {
 		return typeObj.type === data.type
 	})
 
+	const trashProject = async () => {
+		await fetch(
+			`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects/${data._id}`,
+			{
+				method: "DELETE",
+				headers: {
+					"auth-token": localStorage.getItem("auth-token") || ""
+				}
+			}
+		)
+
+		data.onDelete()
+	}
+
 	return (
 		<Card className={"hover:scale-105 transition-all"}>
 			<CardHeader>
 				<CardTitle>
-					<div className='flex flex-row justify-between'>
+					<div className='flex flex-row justify-between items-center'>
 						{data.name}
-						<MdDelete color='red'/>
+						<Button onClick={trashProject} variant={"secondary"}>
+							<MdDelete color='red'/>
+						</Button>
 					</div>
 				</CardTitle>
 				<hr/>
@@ -109,24 +125,24 @@ export default function Home() {
 
 	const [searchTerm, setSearchTerm] = useState("")
 
+	const fetchProjects = async () => {
+		const fetchResp = await fetch(
+			`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects`,
+			{
+				headers: {
+					"auth-token": window.localStorage.getItem("auth-token") || ""
+				}
+			}
+		)
+
+		if (fetchResp.ok) {
+			const {projects} = await fetchResp.json()
+			setUserProjects(projects)
+		}
+	}
+
 	useEffect(() => {
 		if (!auth) return
-
-		const fetchProjects = async () => {
-			const fetchResp = await fetch(
-				`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects`,
-				{
-					headers: {
-						"auth-token": window.localStorage.getItem("auth-token") || ""
-					}
-				}
-			)
-
-			if (fetchResp.ok) {
-				const {projects} = await fetchResp.json()
-				setUserProjects(projects)
-			}
-		}
 
 		fetchProjects()
 	}, [auth])
@@ -168,7 +184,7 @@ export default function Home() {
 							return searchTerm === "" || projObj.name.includes(searchTerm)
 						}).sort(sortAlgs[sortBy]).map((userProj, projIndex) => {
 							return (
-								<ProjectCard {...userProj} key={userProj._id}/>
+								<ProjectCard {...userProj} key={userProj._id} onDelete={fetchProjects}/>
 							)
 						})
 					}

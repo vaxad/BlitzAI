@@ -33,7 +33,7 @@ projectRouter.get(
 	fetchuser,
 	async (req, res) => {
 		try {
-			const sortBy = req.query.sortBy || name
+			const sortBy = req.query.sortBy || "name"
 
 			const allProjects = await Project.find({
 				owner: req.user.id,
