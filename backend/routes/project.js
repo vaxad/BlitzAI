@@ -55,7 +55,7 @@ projectRouter.post(
 	fetchuser,
 	[
 		body("name", "Title cannot be empty").isString(),
-		body("type").isIn(constants.VALID_PROJECT_TYPES)
+		body("type").isString()
 	],
 	async (req, res) => {
 		const valRes = validationResult(req)
