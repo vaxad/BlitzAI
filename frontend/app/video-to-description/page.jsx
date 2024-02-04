@@ -9,7 +9,7 @@ import {toast} from "sonner"
 import store from "@/lib/zustand";
 import {Button} from "@/components/ui/button";
 
-export default function VideoToHashtags() {
+export default function VideoToDescriptions() {
 	const [projectId, setProjectId] = useState("")
 	const [projectName, setProjectName] = useState("")
 	const [projectCreated, setProjectCreated] = useState(false)
@@ -66,33 +66,16 @@ export default function VideoToHashtags() {
 
 			if (res.ok) {
 				const output = await res.json()
-				if (output.transcript) {
-					const transcriptData = new FormData()
-					transcriptData.append("text", output.transcript)
-					transcriptData.append("no_words", 10)
+				const result = output.transcript
 
-					const transcriptToHashtagRes = await fetch(
-						`${process.env.NEXT_PUBLIC_FLASK_URL}/createHashTagsfromDescription`,
-						{
-							method: "POST",
-							redirect: "follow",
-							body: transcriptData
-						}
-					)
-
-					if (transcriptToHashtagRes.ok) {
-						const {result} = await transcriptToHashtagRes.json()
-
-						setProjectOutput(result)
-						await updateProject({
-							id: projectId,
-							input: videoURL,
-							inputType: "video",
-							output: result,
-							outputType: "text"
-						})
-					}
-				}
+				setProjectOutput(result)
+				await updateProject({
+					id: projectId,
+					input: videoURL,
+					inputType: "video",
+					output: result,
+					outputType: "text"
+				})
 			}
 		}
 	}
@@ -146,13 +129,13 @@ export default function VideoToHashtags() {
 		<>
 			<Head>
 				<title>
-					Video to Hashtags
+					Video to Description
 				</title>
 			</Head>
 			{
 				!projectCreated ? (
 					<ProjectModal
-						projectType={"video-to-hashtags"}
+						projectType={"video-to-description"}
 						onProjectCreate={onProjectCreate}
 					/>
 				) : (
@@ -186,28 +169,19 @@ export default function VideoToHashtags() {
 										null
 									)
 								}
-								<Button type={"submit"}>Generate Hashtags</Button>
+								<Button type={"submit"}>Generate Description</Button>
 								<hr/>
-								{
-									projectOutput.length > 0 ? (
-										<>
-											<h3 className={"font-bold text-3xl"}>
-												Generated Hashtags -
-											</h3>
-											{
-												projectOutput.split(" ").map((hashTag) => {
-													return (
-														<Button variant={"secondary"} key={hashTag}>{hashTag}</Button>
-													)
-												})
-											}
-										</>
-									) : (
-										null
-									)
-								}
 							</div>
 						</form>
+						{projectOutput.length ? (
+							<div className={"w-full flex flex-col gap-4"}>
+								<textarea value={projectOutput}/>
+								<Button onClick={(e) => navigator.clipboard.writeText(projectOutput)}>Copy to
+									Clipboard</Button>
+							</div>
+						) : (
+							null
+						)}
 					</div>
 				)
 			}
