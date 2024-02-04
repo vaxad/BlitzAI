@@ -186,8 +186,8 @@ export default function Home() {
 						<TabsList className="grid w-24 grid-cols-2 bg-primary">
 							<TabsTrigger value="grid" onClick={() => {
 								setTab("grid")
-							}}> 
-							  <CiGrid42 />
+							}}>
+								<CiGrid42/>
 							</TabsTrigger>
 							<TabsTrigger value="list" onClick={() => {
 								setTab("list")
@@ -198,64 +198,72 @@ export default function Home() {
 				</div>
 				<div className="flex flex-col justify-center items-center">
 
-				
-				{tab === "grid" ? (
-						<div className={"w-fit grid grid-cols-3 gap-8"}>
-							{DASH_LINKS.filter((dashObj) => {
-								return searchQuery === "" ||
-									dashObj.text.includes(searchQuery) ||
-									dashObj.desc.includes(searchQuery)
-							}).map((dashObj, dashIdx) => {
-								return (
+
+					{tab === "grid" ? (
+							<div className={"w-fit grid grid-cols-3 gap-8"}>
+								{DASH_LINKS.filter((dashObj) => {
+									return searchQuery === "" ||
+										dashObj.text.includes(searchQuery) ||
+										dashObj.desc.includes(searchQuery)
+								}).map((dashObj, dashIdx) => {
+									return (
 										<Card className="w-[300px] h-[300px]">
-											
-									<Link href={dashObj.href} key={dashObj.href}>
-											<CardHeader>
-												<CardDescription className=" flex justify-center">
-													<img src={`/assets/dashsrc/${(dashIdx + 1) % 7}.png`}
-														 className='h-36'/>
-												</CardDescription>
-												<hr></hr>
-												<CardTitle
-													className="flex text-primary pt-4 font-extrabold">{dashObj.text}</CardTitle>
-												<CardDescription className="flex ">{dashObj.desc}</CardDescription>
-											</CardHeader>
-									</Link>
+
+											<Link href={dashObj.href} key={dashObj.href}>
+												<CardHeader>
+													<CardDescription className=" flex justify-center">
+														<img src={`/assets/dashsrc/${(dashIdx + 1) % 7}.png`}
+															 className='h-36'/>
+													</CardDescription>
+													<hr></hr>
+													<CardTitle
+														className="flex text-primary pt-4 font-extrabold">{dashObj.text}</CardTitle>
+													<CardDescription className="flex ">{dashObj.desc}</CardDescription>
+												</CardHeader>
+											</Link>
 										</Card>
-								)
-							})}
-						</div>
-					)
-					: (
-						<div
-							className=' w-full flex flex-col gap-8'
-						>
-							{DASH_LINKS.filter((dashObj) => {
-								return searchQuery === "" ||
-									dashObj.text.includes(searchQuery) ||
-									dashObj.desc.includes(searchQuery)
-							}).map((dashObj, dashIdx) => {
-								return (
-									<Link href={dashObj.href}>
-										<Card className="w-full">
-											<CardHeader>
-												<div className='flex flex-row items-center '>
-													<FaHashtag className='h-8 w-8 text-white items-center'/>
-													<div className='flex flex-col'>
-														<CardTitle
-															className="flex text-primary pt-2  font-extrabold px-4">{dashObj.text}</CardTitle>
-														<CardDescription
-															className="flex px-4">{dashObj.desc}</CardDescription>
+									)
+								})}
+							</div>
+						)
+						: (
+							<div
+								className=' w-full flex flex-col gap-8'
+							>
+								{DASH_LINKS.filter((dashObj) => {
+									return searchQuery === "" ||
+										dashObj.text.includes(searchQuery) ||
+										dashObj.desc.includes(searchQuery)
+								}).map((dashObj, dashIdx) => {
+									const dashIcon = DASH_ICONS.find((iconObj) => {
+										return iconObj.href === dashObj.href
+									})
+
+									const IconComp = dashIcon?.icon
+
+									return (
+										<Link href={dashObj.href} key={dashObj.href}>
+											<Card className="w-full">
+												<CardHeader>
+													<div className='flex flex-row items-center '>
+														{IconComp ?
+															<IconComp className='h-8 w-8 text-white items-center'/> :
+															<FaHashtag className='h-8 w-8 text-white items-center'/>}
+														<div className='flex flex-col'>
+															<CardTitle
+																className="flex text-primary pt-2  font-extrabold px-4">{dashObj.text}</CardTitle>
+															<CardDescription
+																className="flex px-4">{dashObj.desc}</CardDescription>
+														</div>
 													</div>
-												</div>
-											</CardHeader>
-										</Card>
-									</Link>
-								)
-							})}
-						</div>
-					)}
-					</div>
+												</CardHeader>
+											</Card>
+										</Link>
+									)
+								})}
+							</div>
+						)}
+				</div>
 			</div>
 		</div>
 	)
