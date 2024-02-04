@@ -319,8 +319,8 @@ def tts_api():
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
 
-@app.route('/createSummaryFromTranscript', methods=["POST"])
-def createSummaryFromTranscript():
+@app.route('/createSummaryFromAudioText', methods=["POST"])
+def createSummaryFromAudioText():
     try:
         text = request.form['text']
         no_words = request.form['no_words']

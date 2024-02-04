@@ -2,7 +2,7 @@
 
 export default function Loader() {
   return (
-    <div className=' flex w-full h-full min-h-[25vh] py-8 justify-center items-center '>
+    <div className=' fixed top-0 flex  border-b w-screen left-0  h-screen items-center justify-center dark:bg-transparent bg-slate-200 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 '>
         <svg 
   class="container" 
   x="0px" 

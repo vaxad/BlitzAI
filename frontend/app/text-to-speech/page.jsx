@@ -120,8 +120,8 @@ export default function NewProject() {
 									<SelectValue className=" w-fit" />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value={"male"}>Male</SelectItem>
 									<SelectItem value={"female"}>Female</SelectItem>
+									<SelectItem value={"male"}>Male</SelectItem>
 								</SelectContent>
 							</Select>
                             <Select value={tempo} onValueChange={setTempo}>
@@ -146,6 +146,7 @@ export default function NewProject() {
 					img?
 					<div className={"flex flex-col gap-4 items-center justify-center w-10/12 px-4 py-8 flex-grow"}>
 							<audio src={img} controls></audio>
+							<hr className="col-span-4"></hr>
 							<div className=" flex flex-row justify-between w-full items-center">
 							<Button onClick={()=>{handleDiscard()}} variant="secondary" className=" w-fit">Discard</Button>
 							{/* <a className="h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90" href={img} download="Varad's Resume">Download</a> */}

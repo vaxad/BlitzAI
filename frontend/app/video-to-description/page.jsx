@@ -7,6 +7,8 @@ import {Input} from "@/components/ui/input";
 import {getProjectById, getReadonlyURL, manageMedia, updateProject} from "@/lib/utils";
 import {toast} from "sonner"
 import store from "@/lib/zustand";
+import { Textarea } from "@/components/ui/textarea"
+
 import {Button} from "@/components/ui/button";
 
 export default function VideoToDescriptions() {
@@ -79,6 +81,9 @@ export default function VideoToDescriptions() {
 			}
 		}
 	}
+	const handleDiscard = () => {
+		setProjectOutput ("")
+	}
 
 	const onProjectCreate = ({projectName, projectType, id}) => {
 		setProjectCreated(true)
@@ -139,7 +144,7 @@ export default function VideoToDescriptions() {
 						onProjectCreate={onProjectCreate}
 					/>
 				) : (
-					<div className={"flex flex-grow h-[90vh] flex-col justify-center gap-8 p-4 items-center"}>
+					<div className={"flex flex-grow min-h-[90vh] flex-col justify-center p-4 items-center"}>
 						<form
 							onSubmit={(e) => {
 								e.preventDefault()
@@ -170,14 +175,20 @@ export default function VideoToDescriptions() {
 									)
 								}
 								<Button type={"submit"}>Generate Description</Button>
-								<hr/>
+								
 							</div>
 						</form>
+						<hr/>
 						{projectOutput.length ? (
-							<div className={"w-full flex flex-col gap-4"}>
-								<textarea value={projectOutput}/>
-								<Button onClick={(e) => navigator.clipboard.writeText(projectOutput)}>Copy to
+							<div className={"w-full flex flex-col px-7 gap-4"}>
+								<Textarea value={projectOutput} rows={8} />
+								<hr className="col-span-4"/>
+						<div className=" col-span-4 flex flex-row justify-between w-full items-center">
+							<Button onClick={() => { handleDiscard() }} variant="secondary" className=" w-fit">Discard</Button>
+							{/* <a className="h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90" href={img} download="Varad's Resume">Download</a> */}
+							<Button onClick={(e) => {navigator.clipboard.writeText(projectOutput);toast("Description copied successfully")}}>Copy to
 									Clipboard</Button>
+						</div>
 							</div>
 						) : (
 							null

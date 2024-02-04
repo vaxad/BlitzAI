@@ -104,26 +104,33 @@ export default function Home() {
 						</SelectContent>
 					</Select>
 					<Tabs defaultValue="grid" className="w-fit ">
-						<TabsList className="grid w-24 grid-cols-2">
+						<TabsList className="grid w-24 grid-cols-2 bg-primary">
 							<TabsTrigger value="grid" onClick={() => {
 								setTab("grid")
-							}}> <CiGrid42/></TabsTrigger>
+							}}> 
+							  <CiGrid42 />
+							</TabsTrigger>
 							<TabsTrigger value="list" onClick={() => {
 								setTab("list")
-							}}><CiBoxList/></TabsTrigger>
+							}}><CiBoxList/>
+							</TabsTrigger>
 						</TabsList>
 					</Tabs>
 				</div>
+				<div className="flex flex-col justify-center items-center">
+
+				
 				{tab === "grid" ? (
-						<div className={"w-full grid grid-cols-3 gap-8"}>
+						<div className={"w-fit grid grid-cols-3 gap-8"}>
 							{DASH_LINKS.filter((dashObj) => {
 								return searchQuery === "" ||
 									dashObj.text.includes(searchQuery) ||
 									dashObj.desc.includes(searchQuery)
 							}).map((dashObj, dashIdx) => {
 								return (
+										<Card className="w-[300px] h-[300px]">
+											
 									<Link href={dashObj.href} key={dashObj.href}>
-										<Card className="w-[320px] h-[320px]">
 											<CardHeader>
 												<CardDescription className=" flex justify-center">
 													<img src={`/assets/dashsrc/${(dashIdx + 1) % 7}.png`}
@@ -134,15 +141,15 @@ export default function Home() {
 													className="flex text-primary pt-4 font-extrabold">{dashObj.text}</CardTitle>
 												<CardDescription className="flex ">{dashObj.desc}</CardDescription>
 											</CardHeader>
-										</Card>
 									</Link>
+										</Card>
 								)
 							})}
 						</div>
 					)
 					: (
 						<div
-							className='flex flex-col gap-8'
+							className=' w-full flex flex-col gap-8'
 						>
 							{DASH_LINKS.filter((dashObj) => {
 								return searchQuery === "" ||
@@ -169,6 +176,7 @@ export default function Home() {
 							})}
 						</div>
 					)}
+					</div>
 			</div>
 		</div>
 	)
