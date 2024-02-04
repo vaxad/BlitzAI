@@ -207,7 +207,7 @@ export default function Home() {
 										dashObj.desc.includes(searchQuery)
 								}).map((dashObj, dashIdx) => {
 									return (
-										<Card className="w-[300px] h-[300px]">
+										<Card key={dashObj.href} className="w-[300px] h-[300px]">
 
 											<Link href={dashObj.href} key={dashObj.href}>
 												<CardHeader>
