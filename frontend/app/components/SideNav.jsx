@@ -6,7 +6,7 @@ import {usePathname} from 'next/navigation'
 import React from 'react'
 import {MdDeleteOutline, MdDescription, MdOutlineDescription, MdTitle, MdVideoFile} from "react-icons/md";
 import store from '@/lib/zustand';
-import {FaCubes, FaHashtag, FaLock, FaRegFileAudio} from "react-icons/fa";
+import {FaCubes, FaHashtag, FaLock, FaRegFileAudio, FaVideo} from "react-icons/fa";
 import {useTheme} from "next-themes";
 import {IoMdImages} from "react-icons/io";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
@@ -101,6 +101,21 @@ const SIDE_NAV_LINKS = [
 		]
 	},
 	{
+		sectionName: "Premium",
+		sectionLinks: [
+			{
+				href: "/title-to-video",
+				icon: FaVideo,
+				text: "Title to Video"
+			},
+			{
+				href: "/description-to-video",
+				icon: FaVideo,
+				text: "Description to Video"
+			}
+		]
+	},
+	{
 		sectionName: "Video",
 		sectionLinks: [
 			{
@@ -140,7 +155,7 @@ const SIDE_NAV_LINKS = [
 			},
 		]
 	},
-  {
+	{
 		sectionName: "Image",
 		sectionLinks: [
 			{
@@ -148,7 +163,7 @@ const SIDE_NAV_LINKS = [
 				icon: IoMdImages,
 				text: "Edit Thumbnail"
 			},
-      {
+			{
 				href: "/animate-image",
 				icon: MdVideoFile,
 				text: "Animate Image"
