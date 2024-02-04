@@ -93,7 +93,7 @@ const ImageEditor = () => {
 
   return (
     <div>
-      {!image?<div {...getRootProps()} style={dropzoneStyle} className=' w-full h-[40vh] flex flex-col justify-center items-center'>
+      {!image?<div {...getRootProps()} style={dropzoneStyle} className=' w-full h-[40vh] flex flex-col justify-start items-center'>
         <input {...getInputProps()} />
         {isDragActive ? <p>Drop the image here...</p> : <p>Drag and drop an image here, or click to select an image</p>}
       </div>:
@@ -114,7 +114,7 @@ const ImageEditor = () => {
             style={{ border: '1px solid #000', marginTop: '10px' }}
           />
           <button onClick={handleDownload} style={{ marginTop: '10px' }}>
-            
+            Download
           </button>
         </div>
       )}

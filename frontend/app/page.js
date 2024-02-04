@@ -15,7 +15,7 @@ import { CardStackIcon, CardStackPlusIcon } from "@radix-ui/react-icons";
 export default function Home() {
 	return (
 		<main
-			className=" flex absolute top-[80px] left-0 min-h-screen flex-col items-center justify-center px-24 bg-slate-100 dark:bg-black  selection:bg-violet-300 text-slate-950 dark:text-slate-100">
+			className=" flex absolute top-[80px] left-0 min-h-screen w-full flex-col items-center justify-center px-24 bg-slate-100 dark:bg-black  selection:bg-violet-300 text-slate-950 dark:text-slate-100">
 		<div className="flex flex-row gap-10">
 			<div className={`flex flex-col mt-[8vh]  h-full justify-center items-center z-0`}>
 				<div className={`h-fit flex flex-col justify-center gap-4 items-start`}>

@@ -1,13 +1,13 @@
 "use client"
-import {useEffect, useState} from "react"
+import { useEffect, useState } from "react"
 import Head from "next/head"
 import ProjectModal from "@/app/components/ProjectModal";
-import {useRouter, useSearchParams} from "next/navigation";
-import {Input} from "@/components/ui/input";
-import {getProjectById, getReadonlyURL, manageMedia, updateProject} from "@/lib/utils";
-import {toast} from "sonner"
+import { useRouter, useSearchParams } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { getProjectById, getReadonlyURL, manageMedia, updateProject } from "@/lib/utils";
+import { toast } from "sonner"
 import store from "@/lib/zustand";
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 export default function VideoToHashtags() {
 	const [projectId, setProjectId] = useState("")
@@ -20,7 +20,7 @@ export default function VideoToHashtags() {
 
 	const navigate = useRouter()
 
-	const {auth, user} = store()
+	const { auth, user } = store()
 
 	const searchParams = useSearchParams()
 
@@ -39,7 +39,7 @@ export default function VideoToHashtags() {
 						5000
 					)
 				} else {
-					const {_id, name, type, input, inputType, output, outputType} = responseData
+					const { _id, name, type, input, inputType, output, outputType } = responseData
 					setProjectName(name)
 					setProjectId(_id)
 					setVideoURL(input || "")
@@ -81,7 +81,7 @@ export default function VideoToHashtags() {
 					)
 
 					if (transcriptToHashtagRes.ok) {
-						const {result} = await transcriptToHashtagRes.json()
+						const { result } = await transcriptToHashtagRes.json()
 
 						setProjectOutput(result)
 						await updateProject({
@@ -97,7 +97,7 @@ export default function VideoToHashtags() {
 		}
 	}
 
-	const onProjectCreate = ({projectName, projectType, id}) => {
+	const onProjectCreate = ({ projectName, projectType, id }) => {
 		setProjectCreated(true)
 		setProjectName(projectName)
 		setProjectId(id)
@@ -141,6 +141,17 @@ export default function VideoToHashtags() {
 			setVideoURL(vidUrl)
 		}
 	}
+	function downloadImage() {
+		try {
+			navigator.clipboard.writeText(projectOutput);
+			toast("Hashtags copied successfully")
+		} catch (error) {
+			toast("An error occured")
+		}
+	}
+	const handleDiscard = () => {
+		setProjectOutput("")
+	}
 
 	return (
 		<>
@@ -156,7 +167,7 @@ export default function VideoToHashtags() {
 						onProjectCreate={onProjectCreate}
 					/>
 				) : (
-					<div className={"flex flex-grow h-[90vh] flex-col justify-center gap-8 p-4 items-center"}>
+					<div className={"flex flex-grow min-h-[90vh] flex-col justify-center gap-8 p-4 items-center"}>
 						<form
 							onSubmit={(e) => {
 								e.preventDefault()
@@ -165,7 +176,7 @@ export default function VideoToHashtags() {
 							className={"p-8 w-full flex flex-col flex-grow gap-8"}
 						>
 							<h3 className={"font-bold text-3xl"}>{projectName}</h3>
-							<hr/>
+							<hr />
 							<div className={"flex flex-col flex-grow gap-4"}>
 								<label htmlFor={"video-picker"}>
 									Select Video<span className={"text-red-400"}>*</span>
@@ -179,7 +190,7 @@ export default function VideoToHashtags() {
 								{
 									videoURL ? (
 										<video controls className={"max-h-[30vh]"}>
-											<source src={videoURL}/>
+											<source src={videoURL} />
 											Your browser does not support HTML5 Video
 										</video>
 									) : (
@@ -187,20 +198,29 @@ export default function VideoToHashtags() {
 									)
 								}
 								<Button type={"submit"}>Generate Hashtags</Button>
-								<hr/>
+								<hr />
 								{
 									projectOutput.length > 0 ? (
 										<>
 											<h3 className={"font-bold text-3xl"}>
 												Generated Hashtags -
 											</h3>
-											{
-												projectOutput.split(" ").map((hashTag) => {
-													return (
-														<Button variant={"secondary"} key={hashTag}>{hashTag}</Button>
-													)
-												})
-											}
+											<div className=" grid grid-cols-5 gap-2">
+												{
+													projectOutput.split(" #").map((hashTag) => {
+														return (
+															<Button onClick={() => { navigator.clipboard.writeText(`#${hashTag}`); toast("Copied successfully") }} className="w-full hover:scale-95 transition-all" variant={"secondary"} key={hashTag}>#{hashTag.replace(/#/g,"")}</Button>
+														)
+													})
+												}
+												{projectOutput.split(" #").length !== 0 ?
+
+													<div className=" col-span-5 flex flex-row justify-between w-full items-center">
+														<Button onClick={() => { handleDiscard() }} variant="secondary" className=" w-fit">Discard</Button>
+														{/* <a className="h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90" href={img} download="Varad's Resume">Download</a> */}
+														<Button onClick={() => { downloadImage() }}>Copy all</Button>
+													</div> : <></>}
+											</div>
 										</>
 									) : (
 										null

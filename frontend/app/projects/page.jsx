@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select"
 import {Input} from "@/components/ui/input"
 import store from "@/lib/zustand";
-import { MdDelete } from "react-icons/md";
+import {MdDelete} from "react-icons/md";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import Link from "next/link"
 import {Button} from "@/components/ui/button";
@@ -73,31 +73,31 @@ function ProjectCard(data) {
 	})
 
 	return (
-		<Link href={`/${data.type}?projectId=${data._id}`}>
-			<Card className={"hover:scale-105 transition-all"}>
-				<CardHeader>
-					<CardTitle>
-							<div className='flex flex-row justify-between'>
+		<Card className={"hover:scale-105 transition-all"}>
+			<CardHeader>
+				<CardTitle>
+					<div className='flex flex-row justify-between'>
 						{data.name}
-					<MdDelete color='red' />
-								</div>
-					</CardTitle>
-					<hr/>
-				</CardHeader>
-				<CardContent className={"flex flex-col justify-between gap-4 items-center"}>
-					{projectTypeName ? (
-						<span className={"text-bold text-primary"}>
-							{projectTypeName.text}
-						</span>
-					) : (null)}
-					<span
-						className={"text-slate-500 text-sm"}>Updated {new Date(data.lastUpdatedTimestamp).toLocaleDateString()}</span>
+						<MdDelete color='red'/>
+					</div>
+				</CardTitle>
+				<hr/>
+			</CardHeader>
+			<CardContent className={"flex flex-col justify-between gap-4 items-center"}>
+				{projectTypeName ? (
+					<span className={"text-bold text-primary"}>
+						{projectTypeName.text}
+					</span>
+				) : (null)}
+				<span
+					className={"text-slate-500 text-sm"}>Updated {new Date(data.lastUpdatedTimestamp).toLocaleDateString()}</span>
+				<Link href={`/${data.type}?projectId=${data._id}`}>
 					<Button variant={"secondary"} className={"flex-grow w-full"}>
 						Visit Project
 					</Button>
-				</CardContent>
-			</Card>
-		</Link>
+				</Link>
+			</CardContent>
+		</Card>
 	)
 }
 

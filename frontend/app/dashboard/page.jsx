@@ -76,6 +76,11 @@ const DASH_LINKS = [
 		href: "/text-to-speech",
 		text: "Text to Speech",
 		desc: "Generate AI voice-overs for a paragraph"
+	},
+	{
+		href: "/thumbnail-edit",
+		text: "Edit Thumbnail",
+		desc: "Generate an enhanced thumbnail"
 	}
 ]
 
