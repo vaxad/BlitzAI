@@ -145,7 +145,7 @@ export default function SideNav() {
 	return (
 		<aside
 			id="sidebar"
-			className={`-z-10 customnav absolute left-0 top-0 bg-black h-screen ${path === "/" ? "hidden" : ""} w-64 transition-transform`}
+			className={`-z-10 customnav  absolute left-0 top-0 bg-black h-screen ${path === "/" ? "hidden" : ""} w-64 transition-transform`}
 			aria-label="Sidebar"
 		>
 
