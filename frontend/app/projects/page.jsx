@@ -40,6 +40,8 @@ export default function Home() {
 	const {auth} = store()
 	const [userProjects, setUserProjects] = useState([])
 
+	const [sortBy, setSortBy] = useState("name")
+
 	useEffect(() => {
 		if (!auth) return
 
@@ -62,13 +64,24 @@ export default function Home() {
 		fetchProjects()
 	}, [auth])
 
+	const sortAlgs = {
+		date: (prevProj, newProj) => {
+			return (
+				new Date(prevProj.lastUpdatedTimestamp) <= new Date(newProj.lastUpdatedTimestamp)
+			)
+		},
+		name: (prevProj, newProj) => {
+			return prevProj.name >= newProj.name
+		}
+	}
+
 	return (
 
 		<div className='flex flex-col gap-4'>
 			<div className='flex flex-col py-10 px-10 min-h-[200vh] gap-4'>
 				<div className='flex  flex-row gap-5'>
 					<Input type="text" placeholder="Search" className="w-full"/>
-					<Select defaultValue={"date"}>
+					<Select value={sortBy} onValueChange={(e) => setSortBy(e)}>
 						<SelectTrigger className="w-[180px]">
 							<SelectValue placeholder="Sort By"/>
 						</SelectTrigger>
@@ -83,7 +96,7 @@ export default function Home() {
 				</div>
 				<div className={"grid grid-cols-3 gap-4"}>
 					{
-						userProjects.map((userProj, projIndex) => {
+						userProjects.sort(sortAlgs[sortBy]).map((userProj, projIndex) => {
 							return (
 								<ProjectCard {...userProj} key={userProj._id}/>
 							)

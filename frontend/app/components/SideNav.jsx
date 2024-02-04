@@ -4,7 +4,7 @@ import {GrValidate} from "react-icons/gr";
 import {LuGalleryThumbnails, LuLayoutDashboard} from "react-icons/lu";
 import {usePathname} from 'next/navigation'
 import React from 'react'
-import {MdDeleteOutline, MdDescription, MdOutlineDescription} from "react-icons/md";
+import {MdDeleteOutline, MdDescription, MdOutlineDescription, MdTitle} from "react-icons/md";
 import store from '@/lib/zustand';
 import {FaCubes, FaHashtag, FaLock, FaRegFileAudio} from "react-icons/fa";
 import {useTheme} from "next-themes";
@@ -112,6 +112,11 @@ const SIDE_NAV_LINKS = [
 				href: "/video-to-description",
 				icon: MdDescription,
 				text: "Video to Description"
+			},
+			{
+				href: "/video-to-title",
+				icon: MdTitle,
+				text: "Video to Title"
 			},
 		]
 	},
