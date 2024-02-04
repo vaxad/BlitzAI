@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select"
 import {Input} from "@/components/ui/input"
 import store from "@/lib/zustand";
+import { MdDelete } from "react-icons/md";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import Link from "next/link"
 import {Button} from "@/components/ui/button";
@@ -76,7 +77,10 @@ function ProjectCard(data) {
 			<Card className={"hover:scale-105 transition-all"}>
 				<CardHeader>
 					<CardTitle>
+							<div className='flex flex-row justify-between'>
 						{data.name}
+					<MdDelete color='red' />
+								</div>
 					</CardTitle>
 					<hr/>
 				</CardHeader>
