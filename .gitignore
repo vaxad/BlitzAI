@@ -1,4 +1,4 @@
 .idea
-/frontend/.env
-/backend/.env
-/flask/.env
+frontend/.env
+backend/.env
+flask/.env
