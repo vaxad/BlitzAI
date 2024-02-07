@@ -1,5 +1,8 @@
-15
 ![image](https://res.cloudinary.com/db670bhmc/image/upload/v1707140978/tsmkrk57gr2zekgksrlt.png)
+
+
+https://github.com/vaxad/BlitzAI-fork/assets/78205431/8fc506a9-5369-4b0a-9527-7dc2e0d6b354
+
 
 # BlitzAI: Next-Gen AI Video Creation SaaS
 
